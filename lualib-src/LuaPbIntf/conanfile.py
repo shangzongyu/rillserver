@@ -7,8 +7,8 @@ class LuapbintfConan(ConanFile):
     url = "https://github.com/jinq0123/LuaPbIntf"
     description = "Binding Protobuf 3 to Lua 5.3"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=True"
+    options = {"shared": False}
+    default_options = "shared=False"
     generators = "cmake"
     exports_sources = "src/*"
     requires = ("lua-cpp/5.3.4@jinq0123/testing",
