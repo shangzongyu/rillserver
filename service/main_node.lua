@@ -13,21 +13,21 @@ local function start_host()
                         skynet.uniqueservice(v.name,"host", v.port)
                 end
     end
-    ERROR("======start host server======= ")
+    -- ERROR("======start host server======= ")
 end
 
 local function start_console()
     for i,v in pairs(servconf.debug_console) do
         if nodename == v.node then
             skynet.uniqueservice("debug_console", v.port)
-            ERROR("start debug_console in port: " .. v.port.."...")
+            -- ERROR("start debug_console in port: " .. v.port.."...")
         end
     end
 end
 
 local function start_setup()
     local p = skynet.newservice("setup", "setup", 0)
-    ERROR("=========start setupd...======")
+    -- ERROR("=========start setupd...======")
 end
 
 local function start_gateway()
@@ -160,14 +160,14 @@ skynet.start(function()
     --cluster.open(nodename)
     --开启各个服务
     start_roompool()
-
     start_agentpool()
     start_console()
-    --start_setup()
+    start_setup()
     start_global()
     start_login()
     start_dbproxy()
     start_center()
+    start_host()
     start_gateway()
     --exit
     skynet.exit()

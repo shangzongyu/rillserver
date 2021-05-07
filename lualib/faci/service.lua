@@ -1,4 +1,4 @@
---fici->facilitate 
+--faci->facilitate
 
 local skynet = require "skynet"
 local dispatch = require "faci.dispatch"
@@ -12,46 +12,46 @@ local faci_dispatch =  faci_module.dispatch
 local service = {}
 
 function service.init(name, id, path)
-	env.name = name or "nameless server"
-	env.id = tonumber(id) or 0
-	env.path = path
-	if not env.path then
-		env.path = env.name
-	end
+    env.name = name or "nameless server"
+    env.id = tonumber(id) or 0
+    env.path = path
+    if not env.path then
+        env.path = env.name
+    end
 end
 
 local function init()
-	--名字和编号
-	local name = env.name
-	local id = env.id
-	if not name then
-		return
-	end
-	--命名
-	local idstr = env.id > 0 and tostring(env.id) or ""
-	local name = string.format("%s%s", name, idstr)
-	--DEBUG('name: ', name)
-	skynet.name(name, skynet.self())
-	--设置
-	log.set_name(name)
-	LOG_PREFIX(name)
-	
-	--全局变量
-	_G["env"] = env
-	_G["log"] = log
-	--模块
-	module.init_modules()
-	module.fire_event("awake")
-	module.fire_event("start")
-	--DEBUG("start ok "..name.."...")
+    --名字和编号
+    local name = env.name
+    local id = env.id
+    if not name then
+        return
+    end
+    --命名
+    local idstr = env.id > 0 and tostring(env.id) or ""
+    local name = string.format("%s%s", name, idstr)
+    --DEBUG('name: ', name)
+    skynet.name(name, skynet.self())
+    --设置
+    log.set_name(name)
+    LOG_PREFIX(name)
+
+    --全局变量
+    _G["env"] = env
+    _G["log"] = log
+    --模块
+    module.init_modules()
+    module.fire_event("awake")
+    module.fire_event("start")
+    INFO("start ok "..name.."...")
 end
 
 function env.exit()
-	module.fire_event("exit")
+    module.fire_event("exit")
 end
 
 skynet.start(function()
-	init()
+    init()
     if env.init then
         env.init()
     end
@@ -59,16 +59,13 @@ end)
 
 
 function faci_dispatch.stop()
-	if type(env.exit) == "function" then
-		xpcall(env.exit, function(err)
-			log.error(tostring(err))
-			log.error(debug.traceback()) 
-		end)
-	end
-	skynet.exit()
+    if type(env.exit) == "function" then
+        xpcall(env.exit, function(err)
+            log.error(tostring(err))
+            log.error(debug.traceback())
+        end)
+    end
+    skynet.exit()
 end
 
 return service
-
-
-

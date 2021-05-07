@@ -33,27 +33,27 @@ end
 local function require_modules()
 	local path = skynet.getenv("app_root").."mod/".. env.name
 	--DEBUG("require_modules path: ", path)
-	local recursive = true
-	if string.find(env.name, 'room') then
-		recursive = false
-		local path = skynet.getenv("app_root").."mod/room"
-		lfstool.attrdir(path, function(file)
-			--DEBUG("file: ", file)
-			local file = string.match(file, ".*mod/(.*)%.lua")
-			if file then
-				--INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
-				require(file)
-			end
-		end, recursive)
-		return
-	end
+	-- local recursive = true
+	-- if string.find(env.name, 'room') then
+	-- 	recursive = false
+	-- 	local path = skynet.getenv("app_root").."mod/room"
+	-- 	lfstool.attrdir(path, function(file)
+	-- 		--DEBUG("file: ", file)
+	-- 		local file = string.match(file, ".*mod/(.*)%.lua")
+	-- 		if file then
+	-- 			INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
+	-- 			require(file)
+	-- 		end
+	-- 	end, recursive)
+	-- 	return
+	-- end
 
 	lfstool.attrdir(path, function(file)
 		--DEBUG("file: ", file)
 		local file = string.match(file, ".*mod/"..env.path.."/(.*)%.lua")
 		if file then
 			file = env.path .. "." .. file
-			--INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
+			-- INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
 			require(file)
 		end
 	end, recursive)
@@ -77,7 +77,7 @@ end
 
 local event_cache = {}
 function M.fire_event(name, ...)
-	--DEBUG("fire event->", name, inspect(table.pack(...)) )
+	DEBUG("fire event->", name, inspect(table.pack(...)) )
 
 	if not event.can_fire(name) then
 		ERROR("-----fire event fail, event->", name, " is not define------")
