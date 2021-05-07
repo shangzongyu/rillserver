@@ -27,7 +27,7 @@ end
 
 local function start_setup()
     local p = skynet.newservice("setup", "setup", 0)
-    -- ERROR("=========start setupd...======")
+    -- ERROR("=========start setup...======")
 end
 
 local function start_gateway()
