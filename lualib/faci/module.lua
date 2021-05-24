@@ -32,21 +32,21 @@ end
 --通过 env的 mod 名 require 文件
 local function require_modules()
 	local path = skynet.getenv("app_root").."mod/".. env.name
-	--DEBUG("require_modules path: ", path)
-	-- local recursive = true
-	-- if string.find(env.name, 'room') then
-	-- 	recursive = false
-	-- 	local path = skynet.getenv("app_root").."mod/room"
-	-- 	lfstool.attrdir(path, function(file)
-	-- 		--DEBUG("file: ", file)
-	-- 		local file = string.match(file, ".*mod/(.*)%.lua")
-	-- 		if file then
-	-- 			INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
-	-- 			require(file)
-	-- 		end
-	-- 	end, recursive)
-	-- 	return
-	-- end
+	DEBUG("require_modules path: ", path)
+	local recursive = true
+	if string.find(env.name, 'room') then
+		recursive = false
+		local path = skynet.getenv("app_root").."mod/room"
+		lfstool.attrdir(path, function(file)
+			--DEBUG("file: ", file)
+			local file = string.match(file, ".*mod/(.*)%.lua")
+			if file then
+				INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
+				require(file)
+			end
+		end, recursive)
+		return
+	end
 
 	lfstool.attrdir(path, function(file)
 		--DEBUG("file: ", file)

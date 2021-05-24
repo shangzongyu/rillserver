@@ -2,6 +2,7 @@ local skynet = require "skynet"
 require "skynet.manager"
 
 local cluster = require "skynet.cluster"
+
 local runconf = require(skynet.getenv("runconfig"))
 local servconf = runconf.service
 local nodename = skynet.getenv("nodename")

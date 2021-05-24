@@ -26,7 +26,7 @@ end
 
 
 function M.create(id, room_type)
-    local ret, addr, roomInfo =call("roomManager.create", id, room_type)
+    local ret, addr, roomInfo = call("roomManager.create", id, room_type)
     return ret, addr, roomInfo
 end
 

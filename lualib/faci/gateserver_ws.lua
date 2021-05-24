@@ -291,7 +291,7 @@ function gateserver.start(handler)
         end)
         --timeout 精度0.01s
         local function clientNumber()
-            skynet.timeout(5 * 100, clientNumber)
+            skynet.timeout(6000, clientNumber)
             INFO("当前在线人数: ", client_number)
         end
         skynet.timeout(5 * 100, clientNumber)

@@ -20,24 +20,24 @@ require "agent.agent_room"
 
 --     for _, mod in ipairs(modules_arr) do
 --         if type(mod) == 'table' then
---             if mod.module_init then 
+--             if mod.module_init then
 --                 mod.module_init()
 --             end
 
---             if mod.register_event then 
---                 mod.register_event() 
+--             if mod.register_event then
+--                 mod.register_event()
 --             end
 
 --             if mod.register_handler then
---                 mod.register_handler() 
+--                 mod.register_handler()
 --             end
 
---             if mod.modules then 
+--             if mod.modules then
 --                 mod.modules(modules, modules_arr)
 --             end
 
---             for k, v in pairs(mod.CMD or {}) do 
---                 CMD[k] = v 
+--             for k, v in pairs(mod.CMD or {}) do
+--                 CMD[k] = v
 --             end
 --         end
 --     end

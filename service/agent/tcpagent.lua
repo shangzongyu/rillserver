@@ -33,14 +33,14 @@ function default_dispatch(cmd, msg)
         return
     end
     -- DEBUG("%%%%default_dispatch%%%%%%%%", cmd, inspect(msg))
-    local ret 
+    local ret
     local ok, msg = xpcall(function()
         ret = cb(msg)
     end, debug.traceback)
     if not ok then
         error(msg)
     end
-    return ret 
+    return ret
 end
 
 function service_dispatch(service_name, cmd, msg)
@@ -49,18 +49,18 @@ function service_dispatch(service_name, cmd, msg)
         ERROR("====== wsagent service_dispatch cmd not found ========", inspect(account))
         return
     end
-    
+
     local player = env.get_player()
-    
+
     local uid = player.uid
     local id = service.id
     local adress = service.adress
-    return skynet.call(adress, "lua", "client_forward", cmd, id, uid, msg) 
+    return skynet.call(adress, "lua", "client_forward", cmd, id, uid, msg)
 end
 
 function dispatch(_, _, str)
     local cmd, check, msg = protopack.unpack(str)
-    local cmdlist = string.split(cmd, ".") 
+    local cmdlist = string.split(cmd, ".")
     local length = #cmdlist
     local ret
     if length == 2 then
@@ -100,7 +100,7 @@ function CMD.kick()
     kick()
     env.logout(account)
     return true
-end 
+end
 
 function CMD.send2client(msg)
 
