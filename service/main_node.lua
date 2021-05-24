@@ -1,3 +1,11 @@
+-------------------------------------------------------------------------------
+-- Copyright(C)   machine stdio                                              --
+-- Author:        donney                                                     --
+-- Date:          2021-05-24                                                 --
+-- Description:   server start function                                      --
+-- Modification:  modify                                                     --
+-------------------------------------------------------------------------------
+
 local skynet = require "skynet"
 require "skynet.manager"
 
