@@ -117,12 +117,12 @@ return {
     --	},
     --},
 
-    ddz={
-        global={
-            [1] = "global1",
-            [2] = "global2",
-        },
-    },
+    -- ddz={
+    --     global={
+    --         [1] = "global1",
+    --         [2] = "global2",
+    --     },
+    -- },
 
     gp = {
         global={

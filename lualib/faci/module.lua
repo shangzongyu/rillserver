@@ -1,3 +1,12 @@
+-------------------------------------------------------------------------------
+-- Copyright(C)   machine stdio                                              --
+-- Author:        donney                                                     --
+-- Email:         donney_luck@sina.cn                                        --
+-- Date:          2021-05-25                                                 --
+-- Description:   faci module                                                --
+-- Modification:  null                                                       --
+-------------------------------------------------------------------------------
+
 local skynet = require "skynet"
 local lfstool = require "lfstool"
 local env = require "faci.env"
@@ -34,26 +43,24 @@ local function require_modules()
 	local path = skynet.getenv("app_root").."mod/".. env.name
 	DEBUG("require_modules path: ", path)
 	local recursive = true
-	if string.find(env.name, 'room') then
-		recursive = false
-		local path = skynet.getenv("app_root").."mod/room"
-		lfstool.attrdir(path, function(file)
-			--DEBUG("file: ", file)
-			local file = string.match(file, ".*mod/(.*)%.lua")
-			if file then
-				INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
-				require(file)
-			end
-		end, recursive)
-		return
-	end
+	-- if string.find(env.name, 'room') then
+	-- 	recursive = false
+	-- 	local path = skynet.getenv("app_root").."mod/room"
+	-- 	lfstool.attrdir(path, function(file)
+	-- 		--DEBUG("file: ", file)
+	-- 		local file = string.match(file, ".*mod/(.*)%.lua")
+	-- 		if file then
+	-- 			INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
+	-- 			require(file)
+	-- 		end
+	-- 	end, recursive)
+	-- 	return
+	-- end
 
 	lfstool.attrdir(path, function(file)
-		--DEBUG("file: ", file)
-		local file = string.match(file, ".*mod/"..env.path.."/(.*)%.lua")
+		local file = string.match(file, ".*mod/(.*)%.lua")
 		if file then
-			file = env.path .. "." .. file
-			-- INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
+			INFO(string.format("=============> %s%d require file:%s", env.name, env.id, file))
 			require(file)
 		end
 	end, recursive)
@@ -96,7 +103,7 @@ function M.fire_event(name, ...)
 	cache = event_cache[name]
 	--执行注册时间 function
 	for _, fun in ipairs(cache) do
-		xpcall(fun, function(err) 
+		xpcall(fun, function(err)
 			ERROR("error msg", inspect(err))
 			ERROR(debug.traceback())
 		end, ...)

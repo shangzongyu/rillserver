@@ -1,6 +1,8 @@
 local skynet = require "skynet"
 local log = require "log"
-local M = {}
+-- local M = {}
+local env = require "faci.env"
+local M = env.dispatch
 
 local runconf = require(skynet.getenv("runconfig"))
 local servconf = runconf.service
@@ -12,10 +14,10 @@ local function fetch_global()
     return boardconf.global[index]
 end
 
-function M.query(uid)
+function M.query(msg)
 	local global = fetch_global()
 	assert(global)
-	return skynet.call(global, "lua", "queryboard.query", uid)
+	return skynet.call(global, "lua", "queryboard.query", msg.uid)
 end
 
 

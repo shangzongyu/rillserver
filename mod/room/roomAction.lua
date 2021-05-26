@@ -6,7 +6,7 @@ local dispatch = module.dispatch
 local forward = module.forward
 
 
-local ROOM 
+local ROOM
 
 function dispatch.start(...)
     local room_type = select(1, ...)
@@ -14,20 +14,20 @@ function dispatch.start(...)
     local module = room_type .. ".room"
     ROOM = require(module):new()
     ROOM:roomInit(room_type)
-end 
+end
 
 function dispatch.enter(data)
     --TODO:判断超过人数上限
     if ROOM:is_player_num_overload() then
-		ERROR("enter err player num overload")
+        ERROR("enter err player num overload")
         return false, DESK_ERROR.player_no_seat
-    end 
+    end
 
-	return ROOM:enter(data)
+    return ROOM:enter(data)
 end
 
 function dispatch.leave(uid)
-	return ROOM:leave(uid)
+    return ROOM:leave(uid)
 end
 
 function forward.request(...)

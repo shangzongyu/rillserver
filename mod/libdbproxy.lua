@@ -10,7 +10,7 @@ local dbproxy = {}
 
 local function init()
     for i = 1, MAX_DBPROXY_COUNT do
-        dbproxy[i] = string.format("dbproxy%d", i) 
+        dbproxy[i] = string.format("dbproxy%d", i)
     end
 end
 
@@ -25,7 +25,7 @@ end
 
 local function fetch_dbproxy(key)
     if type(key) == "number" then
-        local id = key % MAX_DBPROXY_COUNT + 1 
+        local id = key % MAX_DBPROXY_COUNT + 1
         return dbproxy[id]
     else
         return next_dbproxy()
@@ -75,7 +75,7 @@ end
 local function inc_uid_cname(cname)
     local db = fetch_dbproxy(1)
     return skynet.call(db, "lua", "dbproxy.incr", cname)
-end 
+end
 
 function M.inc_uid()
     return inc_uid_cname("account")
@@ -89,5 +89,3 @@ end
 skynet.init(init)
 
 return M
-
-

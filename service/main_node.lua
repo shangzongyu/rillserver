@@ -1,9 +1,10 @@
 -------------------------------------------------------------------------------
 -- Copyright(C)   machine stdio                                              --
 -- Author:        donney                                                     --
--- Date:          2021-05-24                                                 --
--- Description:   server start function                                      --
--- Modification:  modify                                                     --
+-- Email:         donney_luck@sina.cn                                        --
+-- Date:          2021-05-25                                                 --
+-- Description:   start function                                             --
+-- Modification:  null                                                       --
 -------------------------------------------------------------------------------
 
 local skynet = require "skynet"

@@ -1,5 +1,3 @@
-l
-
 local skynet=require "skynet"
 
 --init module--

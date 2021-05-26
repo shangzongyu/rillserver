@@ -11,7 +11,7 @@ local protopack = require "protopack"
 local env = require "faci.env"
 
 require "agent.agent_init"
-
+require "libqueryboard"
 
 
 local CMD = {}
