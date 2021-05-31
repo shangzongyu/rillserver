@@ -11,13 +11,13 @@ local faci_dispatch =  faci_module.dispatch
 
 local service = {}
 
-function service.init(name, id, path)
+function service.init(name, id)
     env.name = name or "nameless server"
     env.id = tonumber(id) or 0
-    env.path = path
-    if not env.path then
-        env.path = env.name
-    end
+    -- env.path = path
+    -- if not env.path then
+    --     env.path = env.name
+    -- end
 end
 
 local function init()
@@ -56,7 +56,6 @@ skynet.start(function()
         env.init()
     end
 end)
-
 
 function faci_dispatch.stop()
     if type(env.exit) == "function" then
