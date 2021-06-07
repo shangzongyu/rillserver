@@ -4,8 +4,8 @@ return {
   --集群地址配置
   cluster = {
     --admin = "127.0.0.1:2527", --后台交互节点
-    master = "127.0.0.1:2527",
-    node = "127.0.0.1:2528",
+    --master = "127.0.0.1:2527",
+    node1 = "127.0.0.1:2528",
     --node2 = "127.0.0.1:2529",
   },
   --通信协议
@@ -85,9 +85,8 @@ return {
     },
     --host服务
     host_common = {
-      -- web     =   {node = "node1", port = 12111,name="web"},
-      web     =   {node = "master", port = 12112, name = "web"},
-      console =   {node = "node1", port = 12010,name="console"}, --尚未实现
+      web     =   {node = "node1", port = 12111, name="web"},
+      console =   {node = "node1", port = 12112, name="console"}, --尚未实现
     }
   },
   --玩家数据表配置

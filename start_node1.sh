@@ -19,5 +19,5 @@ do
 	esac
 done
 
-$SKYNET_ROOT/skynet $ROOT/etc/config_master
+$SKYNET_ROOT/skynet $ROOT/etc/config_node1
 

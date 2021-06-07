@@ -1,3 +1,12 @@
+-------------------------------------------------------------------------------
+-- Copyright(C)   machine stdio                                              --
+-- Author:        donney                                                     --
+-- Email:         donney_luck@sina.cn                                        --
+-- Date:          2021-06-01                                                 --
+-- Description:   dispatch cmd for all module                                --
+-- Modification:  null                                                       --
+-------------------------------------------------------------------------------
+
 local skynet = require "skynet"
 require "skynet.manager"
 

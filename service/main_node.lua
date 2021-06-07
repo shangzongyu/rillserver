@@ -24,7 +24,6 @@ local function start_masterflow()
 
 end
 
-
 local function start_host()
     for k,v in pairs(servconf.host_common) do
                 if nodename == v.node and v.name=="web" then
@@ -174,8 +173,8 @@ skynet.start(function()
 
     INFO("Server start version: " .. runconf.version)
     --集群信息
-    --cluster.reload(runconf.cluster)
-    --cluster.open(nodename)
+    cluster.reload(runconf.cluster)
+    cluster.open(nodename)
     --开启各个服务
     start_roompool()
     start_agentpool()

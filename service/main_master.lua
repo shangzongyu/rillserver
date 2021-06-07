@@ -181,6 +181,7 @@ skynet.start(function()
     start_supermonitor()
     start_masterflow()
     start_host()
+    start_console()
     -- start_gateway()
     --exit
     skynet.exit()
