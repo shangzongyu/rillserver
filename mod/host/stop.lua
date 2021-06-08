@@ -77,16 +77,15 @@ local function timer()
         end
         --前
         name = stop_order[stop_idx]
-        log.info("stoping %s", name)
+        INFO("stoping "..name)
         send_clusters(false, "stop.host_stop", name)
     end
     skynet.timeout(10, timer)
 end
 
 function dispatch.stop()
-    log.info("stoping %s", stop_order[1])
+    INFO("stoping "..stop_order[1])
     stop_idx = 1
     send_clusters(false, "stop.host_stop", stop_order[1])
-
     skynet.timeout(10, timer)
 end

@@ -70,8 +70,8 @@ function event.start()
 end
 
 function event.exit()
-    for _, v in pairs(t_max_uuid) do
-        db["global"]:update("tb_key", {key_name=k}, {key_name=k, uuid=tonumber(v.uuid), true})
+    for k, v in pairs(t_max_uuid) do
+        db["global"]:update("tb_key", {key_name=k}, {key_name=k, uuid=tonumber(v.uuid)}, true)
     end
 end
 

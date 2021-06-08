@@ -1,3 +1,12 @@
+-------------------------------------------------------------------------------
+-- Copyright(C)   machine stdio                                              --
+-- Author:        donney                                                     --
+-- Email:         donney_luck@sina.cn                                        --
+-- Date:          2021-06-08                                                 --
+-- Description:   host console (an extension of skynet console)              --
+-- Modification:  null                                                       --
+-------------------------------------------------------------------------------
+
 local skynet = require "skynet"
 local socket = require "skynet.socket"
 local tool = require "tool"
@@ -8,10 +17,8 @@ local dispatch = module.dispatch
 local forward = module.forward
 local event = module.event
 
-
 local runconf = require(skynet.getenv("runconfig"))
 local node = skynet.getenv("nodename")
-
 
 local function send(fd, ...)
     local t = { ... }
@@ -22,11 +29,10 @@ local function send(fd, ...)
     socket.write(fd, "\n")
 end
 
-
-local function handle(fd, cmdline, ...)
-    local ret = skynet.call(skynet:self(), "lua", cmdline, ...)
+local function handle(fd, cmdline)
+    local ret = skynet.call(skynet:self(), "lua", cmdline)
     send(fd, "ok")
-    send(fd, ret)
+    -- send(fd, ret)
 end
 
 local function main_loop(fd)
@@ -38,17 +44,17 @@ local function main_loop(fd)
             if not cmdline then
                 break
             end
-            cmdlist = string.split(cmdline, " ")
+            -- cmdlist = string.split(cmdline, " ")
             if cmdline ~= "" then
-              handle(fd, cmdlist[1], cmdlist[2])
+                handle(fd, cmdline)
+                -- handle(fd, cmdlist[1], cmdlist[2])
             end
 
         end
     end)
 
     if not ok then
-        skynet.error(fd, err)
-    end
+        skynet.error(fd, err) end
     skynet.error(fd, "disconnected")
     socket.close(fd)
 end

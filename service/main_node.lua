@@ -15,15 +15,6 @@ local runconf = require(skynet.getenv("runconfig"))
 local servconf = runconf.service
 local nodename = skynet.getenv("nodename")
 
-
-local function start_supermonitor()
-
-end
-
-local function start_masterflow()
-
-end
-
 local function start_host()
     for k,v in pairs(servconf.host_common) do
                 if nodename == v.node and v.name=="web" then
@@ -168,9 +159,7 @@ local function start_global()
     end
 end
 
-
 skynet.start(function()
-
     INFO("Server start version: " .. runconf.version)
     --集群信息
     cluster.reload(runconf.cluster)
