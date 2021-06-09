@@ -63,7 +63,7 @@ local function start_gateway()
 end
 
 local function start_agentpool()
-    --开启agentpool服务
+    --开启agentpool服务 
 
   for i,v in pairs(servconf.agentpool) do
         local name = string.format("agentpool%d", i)
@@ -158,6 +158,7 @@ local function start_global()
         end
     end
 end
+
 
 skynet.start(function()
     INFO("Server start version: " .. runconf.version)

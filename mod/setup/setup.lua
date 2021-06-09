@@ -45,7 +45,6 @@ end
 function dispatch.update_all()
     list = dir("config")
     for k, v in pairs(list) do
-        DEBUG("update " .. v .. " conf")
         dispatch.update(v)
     end
 end
@@ -54,7 +53,6 @@ function dispatch.update(name)
     datasheet.query(name)
     local conf = reload.loadmod(name)
     builder.update(name, conf)
-    -- builder.update(name, conf)
     DEBUG("update conf: " .. name)
 end
 

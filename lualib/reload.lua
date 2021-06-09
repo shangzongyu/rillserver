@@ -1,26 +1,36 @@
-local reload = {}
-
+-------------------------------------------------------------------------------
+-- Copyright(C)   machine stdio                                              --
+-- Author:        donney                                                     --
+-- Email:         donney_luck@sina.cn                                        --
+-- Date:          2021-06-09                                                 --
+-- Description:   reload file                                                --
+-- Modification:  null                                                       --
+-------------------------------------------------------------------------------
 
 local table = table
 local debug = debug
 
+local reload = {}
+
 local sandbox = {}
 local sandbox_meta = {}
 local sandbox_mods = {}
-
 
 local function make_sandbox()
     return setmetatable({}, sandbox)
 end
 local function empty_func()
 end
+
 local function sandbox_pairs()
     return empty_func
 end
+
 local function sandbox_setmetatable(t, meta)
     sandbox_meta[t] = meta
     return t
 end
+
 local function sandbox_require(mod)
     if not sandbox_mods[mod] then
         sandbox_mods[mod] = make_sandbox()
@@ -136,8 +146,7 @@ function update_upvalue(old_func, new_func, name, deep)
         else
             if old_exist_name[name] then
                 local old_value = old_upvalue[name]
-                if type(old_value) ~= type(value) then
-                    debug.setupvalue(new_func, i, old_value)
+                if type(old_value) ~= type(value) then debug.setupvalue(new_func, i, old_value)
                 elseif type(old_value) == "function" then
                     update_function(old_value, value, name, deep .. " ")
                 elseif type(old_value) == "table" then
@@ -158,7 +167,7 @@ function update_function(old_func, new_func, name, deep)
     if visited_sig[signature] then return end
     visited_sig[signature] = true
     update_upvalue(old_func, new_func, name, deep)
-	
+
     change_func[old_func] = new_func
 end
 
@@ -264,13 +273,13 @@ local function travel_all()
                 f(value)
             end
         elseif type(t) == "table" then
-		
+
             f(debug.getmetatable(t))
             for k, v in pairs(t) do
                 f(k)
                 f(v)
                 if type(v) == "function" then
-					if get == 3 then print("change_func:"..k) end  --测试
+                    if get == 3 then print("change_func:"..k) end  --测试
                     if change_func[v] then
                         t[k] = change_func[v]
                     end
@@ -313,6 +322,8 @@ end
 
 
 function reload.reload(mod)
+    local s = os.clock()
+
     init()
 
     local old_obj = package.loaded[mod]
@@ -334,12 +345,11 @@ function reload.reload(mod)
     setmetatable(env, nil)
     update_obj(_ENV, env, "ENV", "")
     travel_all()
-	
-	debug.setupvalue(func, 1, _ENV)
-	func()
-    return true
+
+    debug.setupvalue(func, 1, _ENV)
+    func()
+    local e = os.clock()
+    return e - s, true
 end
 
 return reload
-
-

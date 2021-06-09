@@ -25,11 +25,15 @@ local default_page = [[
     <a href="/?cmd=web.kill">kill</a>
     <p>
     <a href="/?cmd=stop.stop">stop all</a>
+    <p>
+    <a href="/?cmd=reload.setup">reload setup</a>
+    <p>
+    <a href="/?cmd=reload.mod">reload mod</a>
 ]]
 
 --http://123.207.111.118:8111/?cmd=web.test
 function dispatch.test()
-    return "good man"
+    return "good man fuck you"
 end
 
 local function response(id, ...)
@@ -69,7 +73,7 @@ local function handler(addr, fd)
         socket.close(fd)
         return
     end
-
+    INFO(inspect(q))
     local ret = skynet.call(skynet:self(), "lua", q.cmd , addr, fd, q)
     ret = ret or "nil response"
     response(fd, code, ret)

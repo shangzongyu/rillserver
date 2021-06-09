@@ -16,7 +16,7 @@ local defaultLevel = tonumber(skynet.getenv "log_default_lv") or log_level.LOG_D
 local prefix = ""
 function LOG_PREFIX(pre)
   prefix = "[" .. pre .. "]"
-end 
+end
 
 --日志 --
 local function logger(str, level, color)
@@ -25,8 +25,8 @@ local function logger(str, level, color)
         local info = table.pack(...)
         info[#info+1] = "\x1b[0m"
         local now = os.time()
-        local data_time = os.date("%Y-%m-%d %H:%M:%S",now)
-        skynet.error(string.format("%s %s%s%s",data_time,  color, prefix, str), table.unpack(info))
+        local data_time = os.date("[%Y-%m-%d %H:%M:%S]",now)
+        skynet.error(string.format("%s %s%s%s", data_time, color, prefix, str), table.unpack(info))
     end
   end
 end

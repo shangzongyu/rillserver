@@ -14,6 +14,4 @@ function M.can_fire(name)
 	return M.events[name]
 end
 
-
-
 return M

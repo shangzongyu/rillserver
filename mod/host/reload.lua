@@ -17,10 +17,10 @@ local function call_clusters(ignore, ...) --ignore -> ignore self
     end
 end
 
-function dispatch.host_mod(addr, fd ,q)
+function dispatch.host_mod(addr, fd , q)
     local service_name = q.name
     local mod = q.mod or "ALL"
-    log.debug("start reload %s ...", mod)
+    DEBUG("start reload..."..mod)
 
     local list = {}
     local services = skynet.call(".launcher", "lua", "LIST")
@@ -28,8 +28,9 @@ function dispatch.host_mod(addr, fd ,q)
         local cmd = string.match(v, "snlua (%w+) *.*")
         if cmd == service_name then
             log.debug("reload %s", cmd)
-            local diff_time = skynet.call(k, "debug", "RELOAD", mod)
-            list[skynet.address(k)] = string.format("%.2fs (%s)", diff_time, v)
+            -- local diff_time = skynet.call(k, "debug", "RELOAD", mod)
+            local diff_time = skynet.call(k, "lua", "faci.reload", mod)
+            list[skynet.address(k)] = string.format("%.05fs (%s)", diff_time, v)
         end
     end
     log.info("host_mod %s", tool.dump(list))
@@ -37,7 +38,7 @@ function dispatch.host_mod(addr, fd ,q)
 end
 
 
-function dispatch.host_setup(addr, fd ,q)
+function dispatch.host_setup(addr, fd, q)
     --全服
     if not q.mod then
         local ret = skynet.call("setup", "lua", "setup.update_all")
@@ -49,7 +50,7 @@ end
 
 function dispatch.setup(addr, fd ,q)
     call_clusters(false, "reload.host_setup", addr, fd ,q)
-    return "update"
+    return "reload setup"
 end
 
 function dispatch.mod(addr, fd ,q)

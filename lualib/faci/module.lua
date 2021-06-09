@@ -21,21 +21,24 @@ function M.get_env(file)
 end
 
 function M.reload_module(file)
-	local ok, result = reload.reload(file)
-	return ok, result
+	local diff_time, ok = reload.reload(file)
+	return diff_time, ok
 end
 
 function M.reload_modules()
-	local path = skynet.getenv("app_root") .. "mod/".. env.path
-	lfstool.attrdir(path, function(file)
-		local file = string.match(file, ".*mod/(.*)%.lua")
+	local path = skynet.getenv("app_root").."mod/"..env.name
+    local diff_time = 0, ok
+    lfstool.attrdir(path, function(file)
+	local file = string.match(file, ".*mod/(.*)%.lua")
 		if file then
-			file = env.path .. "." .. file
-			INFO(string.format("%s%d reload file:%s", env.name, env.id, file))
-			local ok, result = reload.reload(file)
+			-- log.info(string.format("%s%d reload file:%s", env.name, env.id, file))
+            INFO("reload file:"..file)
+            dt, result = reload.reload(file)
+            diff_time = diff_time + dt
+            ok = result
 		end
 	end)
-	--return ok, result
+	return diff_time, ok
 end
 
 --通过 env的 mod 名 require 文件
@@ -113,6 +116,5 @@ end
 function M.init_modules()
 	require_modules()
 end
-
 
 return M

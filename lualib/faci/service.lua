@@ -67,4 +67,13 @@ function faci_dispatch.stop()
     skynet.exit()
 end
 
+function faci_dispatch.reload(mod)
+    if mod == "ALL" then
+        return module.reload_modules()
+    else
+        return module.reload_module(mod)
+    end
+end
+
+
 return service
