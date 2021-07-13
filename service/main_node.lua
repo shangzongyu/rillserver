@@ -63,8 +63,7 @@ local function start_gateway()
 end
 
 local function start_agentpool()
-    --开启agentpool服务 
-
+    --开启agentpool服务
   for i,v in pairs(servconf.agentpool) do
         local name = string.format("agentpool%d", i)
         if nodename == v.node then

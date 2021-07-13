@@ -12,18 +12,18 @@ local sdk     = {
     debug       = 2,
 }
 
---返回true,uid/false 
+--返回true,uid/false
 local function register(account, password)
-	if not account then
-		ERROR("register not account" )
+    if not account then
+        ERROR("register not account" )
         return false
-	end
+    end
     local ret = libdbproxy.get_accountdata(account)
     if ret then
         return false
     end
 
-    local uid = libdbproxy.inc_uid() 
+    local uid = libdbproxy.inc_uid()
     local data = {
         uid = uid,
         account = account,
@@ -31,38 +31,38 @@ local function register(account, password)
         sdk = sdk.inner
     }
 
-    local ret = libdbproxy.set_accountdata(account, data) 
+    local ret = libdbproxy.set_accountdata(account, data)
     INFO("register succ account: ", account, " uid:", uid)
     return true, uid
 end
 
---返回true,uid/false 
+--返回true,uid/false
 local function check_normal_sdk(account, password)
-	if not account then
-		ERROR("check_pw not account")
+    if not account then
+        ERROR("check_pw not account")
         return false
-	end
+    end
 
     local ret = libdbproxy.get_accountdata(account)
-	--登录
-	if ret and ret.password == password then
-		--INFO(string.format("check_pw succ account:%s then login uid: %d", account, ret.uid) )
-		return true, ret.uid
-	end
-	--注册
-	--INFO(string.format("check_pw fail account:%s then register",  account))
-	local ret, uid = register(account, password)
-	if ret then
-		return true, uid
-	end
+    --登录
+    if ret and ret.password == password then
+        --INFO(string.format("check_pw succ account:%s then login uid: %d", account, ret.uid) )
+        return true, ret.uid
+    end
+    --注册
+    --INFO(string.format("check_pw fail account:%s then register",  account))
+    local ret, uid = register(account, password)
+    if ret then
+        return true, uid
+    end
 
-	return false
+    return false
 end
 
 local function inner_auth(openId, userdata)
     local account = userdata.account
     local password = userdata.password
-    
+
     return check_normal_sdk(account, password)
 end
 

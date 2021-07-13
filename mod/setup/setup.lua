@@ -35,7 +35,6 @@ local reload = require "reload"
 local function init()
     local list = dir("config")
     for k, v in pairs(list) do
-        -- DEBUG("init " .. v .. " conf")
         local conf = reload.loadmod(v)
         builder.new(v, conf)
     end

@@ -162,8 +162,17 @@ function COMMAND.help()
 		netstat = "netstat : show netstat",
 		profactive = "profactive [on|off] : active/deactive jemalloc heap profilling",
 		dumpheap = "dumpheap : dump heap profilling",
+        resetup = "resetup : resetup",
+        reload = "reload mod : reload xxx xxxx"
 	}
 end
+
+function COMMAND.resetup()
+end
+
+function COMMAND.reload(mod)
+end
+
 
 function COMMAND.clearcache()
 	codecache.clear()

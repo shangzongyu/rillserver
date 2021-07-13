@@ -20,7 +20,7 @@ end
 function dispatch.host_mod(addr, fd , q)
     local service_name = q.name
     local mod = q.mod or "ALL"
-    DEBUG("start reload..."..mod)
+    INFO("start reload..."..mod)
 
     local list = {}
     local services = skynet.call(".launcher", "lua", "LIST")
@@ -28,12 +28,11 @@ function dispatch.host_mod(addr, fd , q)
         local cmd = string.match(v, "snlua (%w+) *.*")
         if cmd == service_name then
             log.debug("reload %s", cmd)
-            -- local diff_time = skynet.call(k, "debug", "RELOAD", mod)
-            local diff_time = skynet.call(k, "lua", "faci.reload", mod)
+            local diff_time = skynet.call(k, "debug", "RELOAD", mod)
             list[skynet.address(k)] = string.format("%.05fs (%s)", diff_time, v)
         end
     end
-    log.info("host_mod %s", tool.dump(list))
+    INFO("reload ok "..tool.dump(list))
     return list
 end
 

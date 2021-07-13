@@ -57,6 +57,7 @@ local function init(skynet, export)
 		function dbgcmd.RUN(source, filename, ...)
 			local inject = require "skynet.inject"
 			local args = table.pack(...)
+
 			local ok, output = inject(skynet, source, filename, args, export.dispatch, skynet.register_protocol)
 			collectgarbage "collect"
 			skynet.ret(skynet.pack(ok, table.concat(output, "\n")))
@@ -82,6 +83,15 @@ local function init(skynet, export)
 		function dbgcmd.LINK()
 			skynet.response()	-- get response , but not return. raise error when exit
 		end
+
+        function dbgcmd.RELOAD(mod)
+            local module = require "faci.module"
+            if mod == "ALL" then
+                return skynet.ret(skynet.pack(module.reload_modules()))
+            else
+                return skynet.ret(skynet.pack(module.reload_module(mod)))
+            end
+        end
 
 		function dbgcmd.TRACELOG(proto, flag)
 			if type(proto) ~= "string" then
