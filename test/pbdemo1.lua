@@ -1,4 +1,3 @@
-
 package.cpath = "../luaclib/?.so;"
 
 local client=require "tcpclient"

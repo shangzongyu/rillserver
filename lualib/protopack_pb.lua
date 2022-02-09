@@ -98,7 +98,7 @@ function M.pack(cmd, check, msg)
     local f = string.format("> i2 i4 I4 c%d", pblen)
     local str = string.pack(f, len, check, code, pbstr)
     --调试
-    --log.info("send:"..bin2hex(str))
+    log.info("send:"..bin2hex(str))
     -- log.info(string.format("send:cmd(%s) check(%d) msg->%s", cmd, check, tool.dump(msg)))
     INFO("send:cmd("..cmd..") check("..check..") msg->"..serpent.line(msg))
     return str
@@ -114,7 +114,7 @@ function M.unpack(str)
     local pblen = string.len(str)-4-4
     local f = string.format("> i4 I4 c%d", pblen)
     local check, code, pbstr = string.unpack(f, str)
-    -- log.info("recv pbstr:"..bin2hex(pbstr))
+    log.info("recv pbstr:"..bin2hex(pbstr))
     local cmd = code2name[code]
     if not cmd then
         log.info("recv:code(%d) but not regiest", code)
