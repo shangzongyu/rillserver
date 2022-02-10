@@ -4,3 +4,4 @@
 *.o
 /TAGS
 skynet
+proto/**/*.pb
