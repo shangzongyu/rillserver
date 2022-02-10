@@ -1,8 +1,7 @@
 require "error_code"
 require "logger_api"
 
-class = require "middleclass"
-
+-- class = require "middleclass"
 
 local inspect_lib = require "inspect"
 function inspect(value)

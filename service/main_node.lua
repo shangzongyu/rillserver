@@ -165,7 +165,7 @@ skynet.start(function()
     cluster.reload(runconf.cluster)
     cluster.open(nodename)
     --开启各个服务
-    start_roompool()
+    --start_roompool()
     start_agentpool()
     start_console()
     start_setup()
