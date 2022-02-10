@@ -7,3 +7,6 @@
 [submodule "lualib-src/lua-protobuf"]
 	path = lualib-src/lua-protobuf
 	url = https://github.com/starwing/lua-protobuf.git
+[submodule "lualib-src/lua-snapshot"]
+	path = lualib-src/lua-snapshot
+	url = https://github.com/cloudwu/lua-snapshot.git

@@ -17,7 +17,8 @@ LUA_INC ?= ../skynet/3rd/lua
 LUA_CLIB = cjson websocketnetpack clientwebsocket lfs hash
 
 all	: $(LUA_CLIB_PATH)/cjson.so $(LUA_CLIB_PATH)/websocketnetpack.so $(LUA_CLIB_PATH)/clientwebsocket.so \
-		$(LUA_CLIB_PATH)/lfs.so $(LUA_CLIB_PATH)/luaclock.so $(LUA_CLIB_PATH)/hash.so $(LUA_CLIB_PATH)/pb.so
+		$(LUA_CLIB_PATH)/lfs.so $(LUA_CLIB_PATH)/luaclock.so $(LUA_CLIB_PATH)/hash.so $(LUA_CLIB_PATH)/pb.so \
+		$(LUA_CLIB_PATH)/snapshot.so
 
 $(LUA_CLIB_PATH)/cjson.so : lua-cjson/fpconv.c lua-cjson/strbuf.c lua-cjson/lua_cjson.c | $(LUA_CLIB_PATH)
 	$(CC) $(CFLAGS) $(SHARED) -Ilua-cjson $^ -o $@
@@ -40,6 +41,8 @@ $(LUA_CLIB_PATH)/hash.so : lua-hash.c | $(LUA_CLIB_PATH)
 $(LUA_CLIB_PATH)/pb.so : lua-protobuf/pb.c | $(LUA_CLIB_PATH)
 	$(CC) $(CFLAGS) $(SHARED) -Ilua-protobuf $^ -o $@
 
+$(LUA_CLIB_PATH)/snapshot.so : lua-snapshot/snapshot.c | $(LUA_CLIB_PATH)
+	$(CC) $(CFLAGS) $(SHARED) $^ -o $@
 clean :
 	rm -f $(LUA_CLIB_PATH)/*.so
 
