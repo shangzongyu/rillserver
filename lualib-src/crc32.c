@@ -1,3 +1,12 @@
+/*****************************************************************************/
+/* Copyright(C)   machine stdio                                              */
+/* Author:        donney                                                     */
+/* Email:         donney_luck@sina.cn                                        */
+/* Date:          2022-02-10                                                 */
+/* Description:   crc32                                                      */
+/* Modification:  no                                                         */
+/*****************************************************************************/
+
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
