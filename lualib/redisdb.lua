@@ -9,6 +9,7 @@
 
 local redis = require("skynet.db.redis")
 local redisdb = {}
+redisdb.__index = redisdb
 
 function redisdb:start(conf)
   local db = redis.connect(conf)
