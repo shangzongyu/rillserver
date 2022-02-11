@@ -87,7 +87,7 @@ end
 
 local event_cache = {}
 function M.fire_event(name, ...)
-	DEBUG("fire event->", name, inspect(table.pack(...)) )
+	DEBUG("fire event->", name, serpent(table.pack(...)) )
 
 	if not event.can_fire(name) then
 		ERROR("-----fire event fail, event->", name, " is not define------")
@@ -107,7 +107,7 @@ function M.fire_event(name, ...)
 	--执行注册时间 function
 	for _, fun in ipairs(cache) do
 		xpcall(fun, function(err)
-			ERROR("error msg", inspect(err))
+			ERROR("error msg", serpent(err))
 			ERROR(debug.traceback())
 		end, ...)
 	end

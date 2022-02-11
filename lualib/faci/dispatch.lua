@@ -19,7 +19,7 @@ local tool = require "tool"
 
 
 local function traceback(err)
-    ERROR(inspect(err))
+    ERROR(serpent(err))
     ERROR(debug.traceback())
 end
 
@@ -170,7 +170,7 @@ local function lua_dispatch(session, addr, cmd, ...)
     local ret = {xpcall(cb, traceback, ...)}
     local isok = ret[1]
     if not isok then
-        INFO("lua_dispatch cb call fail===> cmd: ", cmd1 .. "." .. cmd2, " ret:",inspect(ret) )
+        INFO("lua_dispatch cb call fail===> cmd: ", cmd1 .. "." .. cmd2, " ret:",serpent(ret) )
         skynet.ret()
         return false
     end

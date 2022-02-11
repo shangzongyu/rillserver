@@ -32,16 +32,10 @@ function forward.login(fd, msg, source)
     --login auth
     local isok, uid = login_auth(sdkid, msg)
     if not isok then
-        ERROR("+++++++++++ account: ",inspect(account), " login login_auth fail +++++++++")
-        log.debug("%s login fail, wrong password ", account)
-        msgresult.result = login_result_code.LOGIN_WRONG_PASSWORD
-        return msgresult
-    end
-
+        ERROR("+++++++++++ account: ",serpent(account), " login login_auth fail +++++++++") log.debug("%s login fail, wrong password ", account) msgresult.result = login_result_code.LOGIN_WRONG_PASSWORD return msgresult end
     --center
     local data = {
-        node = skynet.getenv("nodename"),
-        fd = fd,
+        node = skynet.getenv("nodename"), fd = fd,
         gate = source,
         key = key,
     }

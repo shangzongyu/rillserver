@@ -29,10 +29,10 @@ local dispatch
 function default_dispatch(cmd, msg)
     local cb = env.dispatch[cmd]
     if type(cb) ~= "function" then
-        ERROR("====== wsagent default_dispatch not found ========", inspect(account))
+        ERROR("====== wsagent default_dispatch not found ========", serpent(account))
         return
     end
-    -- DEBUG("%%%%default_dispatch%%%%%%%%", cmd, inspect(msg))
+    -- DEBUG("%%%%default_dispatch%%%%%%%%", cmd, serpent(msg))
     local ret
     local ok, msg = xpcall(function()
         ret = cb(msg)
@@ -48,7 +48,7 @@ function service_dispatch(service_name, cmd, msg)
     local room_id = player.ext_info.room_id
     local service = env.service[room_id]
     if not service then
-        ERROR("====== wsagent service_dispatch cmd not found ========", inspect(account), '   =======', inspect(env.service),'  room_id: ', room_id)
+        ERROR("====== wsagent service_dispatch cmd not found ========", serpent(account), '   =======', serpent(env.service),'  room_id: ', room_id)
         return
     end
 
@@ -104,8 +104,7 @@ function CMD.disconnect()
     return true
 end
 
-function CMD.kick(...)
-    --local uid = select(1, ...)
+function CMD.kick(...) --local uid = select(1, ...)
     --DEBUG("-------agent kick exit uid("..uid..")------")
     --DEBUG("-------agent kick exit uid("..account.uid..")------")
     local kick=env.dispatch["kick_room"]
