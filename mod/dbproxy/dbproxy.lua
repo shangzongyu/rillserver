@@ -15,6 +15,7 @@ local db = {
     ["game"] = nil,
     ["global"] = nil,
     ["log"] = nil,
+    ["redis"] = nil,
 }
 
 local function init_db(conf)
@@ -32,8 +33,11 @@ function event.awake()
     assert(db.global)
     db.log = init_db(dbconf.logdb)
     assert(db.log)
+    db.redis = init_db(dbconf.redisdb)
+    assert(db.redis)
 end
 
+-- mongodb api
 function dispatch.get(dbname, cname, select)  --cname -> collection name
     return db[dbname]:findOne(cname, select)
 end
@@ -46,7 +50,14 @@ function dispatch.insert(dbname, cname, data)
     db[dbname]:insert(cname, data)
 end
 
+-- redis api TODO: 用的时候在增加
+function dispatch.r_set(dbname, key, value)
+    db[dbname]:set(key, value)
+end
 
+function dispatch.r_get(dbname, key)
+    db[dbname]:get(key, value)
+end
 
 
 --发号器

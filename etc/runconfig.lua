@@ -66,6 +66,7 @@ return {
       gamedb = {db_type = "mongodb", host = "127.0.0.1", db_name = "game"},
       globaldb = {db_type = "mongodb", host = "127.0.0.1", db_name = "global"},
       logdb = {db_type = "mongodb", host = "127.0.0.1", db_name = "log"},
+      redisdb = {db_type = "redisdb", host = "127.0.0.1", db_name = "redis"}
     },
     --dbproxy_common = {
     --	accountdb = {db_type = "mysqldb", host = "139.196.180.249", database = "account", port = 3306, user='admin', password='zhengsu@2018'}, --host,port,username,password,authmod
