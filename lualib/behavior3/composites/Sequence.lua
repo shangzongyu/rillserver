@@ -10,7 +10,7 @@ function sequence:ctor()
 end
 
 function sequence:tick(tick)
-	for i = 1,table.getn(self.children) do
+	for i = 1, #self.children do
 		local v = self.children[i]
 		local status = v:_execute(tick)
 		print(i,v.title)

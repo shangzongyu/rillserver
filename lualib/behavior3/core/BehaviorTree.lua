@@ -64,7 +64,7 @@ function behaviorTree:load(jsonData, names)
 		end
 
 		if v.children then
-			for i = 1,table.getn(v.children) do
+			for i = 1, #v.children do
 				local cid = spec.children[i]
 				print("<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 				-- print(spec.children[i].title,spec.children[i],nodes[cid].title,nodes[cid])
@@ -128,14 +128,14 @@ function behaviorTree:tick(target, blackboard)
 
 	local start = 0
 	local i
-	for i = 0,math.min(table.getn(lastOpenNodes), table.getn(currOpenNodes)) do
+	for i = 0,math.min(#lastOpenNodes, #currOpenNodes) do
 		start = i + 1
 		if lastOpenNodes[i] ~= currOpenNodes[i] then
 			break
 		end
 	end
 
-	for i = table.getn(lastOpenNodes),0,-1 do
+	for i = #lastOpenNodes,0,-1 do
 		if lastOpenNodes[i] then
 			lastOpenNodes[i]:_close(tick)
 		end

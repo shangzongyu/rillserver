@@ -15,7 +15,7 @@ function selector:tick(tick)
 	-- 	local status = v:_execute(tick)
 	-- end
 
-	local len = table.getn(self.children)
+	local len = #self.children
 	local index = math.random(1,len)
 	local v = self.children[index]
 	local status = v:_execute(tick)

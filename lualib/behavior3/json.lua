@@ -229,7 +229,7 @@ function decode_scanNumber(s,startPos)
     endPos = endPos + 1
   end
   local stringValue = 'return ' .. string.sub(s,startPos, endPos-1)
-  local stringEval = loadstring(stringValue)
+  local stringEval = load(stringValue)
   assert(stringEval, 'Failed to scan number [ ' .. stringValue .. '] in JSON string at position ' .. startPos .. ' : ' .. endPos)
   return stringEval(), endPos
 end
@@ -395,7 +395,7 @@ function isArray(t)
       maxIndex = math.max(maxIndex,k)
     else
       if (k=='n') then
-        if v ~= table.getn(t) then return false end  -- False if n does not hold the number of elements
+        if v ~= #t then return false end  -- False if n does not hold the number of elements
       else -- Else of (k=='n')
         if isEncodable(v) then return false end
       end  -- End of (k~='n')
