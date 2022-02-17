@@ -1,4 +1,4 @@
-require 'lib.behavior3.b3'
+require 'behavior3.b3'
 
 local blackboard = b3.Class("Blackboard")
 b3.Blackboard = blackboard

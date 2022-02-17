@@ -1,4 +1,4 @@
-require 'lib.behavior3.core.Action'
+require 'behavior3.core.Action'
 
 local findWanderPoint = b3.Class("FindWanderPoint", b3.Action)
 b3.FindWanderPoint = findWanderPoint

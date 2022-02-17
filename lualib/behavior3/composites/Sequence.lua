@@ -1,4 +1,4 @@
-require 'lib.behavior3.core.Composite'
+require 'behavior3.core.Composite'
 
 local sequence = b3.Class("Sequence", b3.Composite)
 b3.Sequence = sequence

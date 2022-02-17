@@ -1,4 +1,4 @@
-require 'lib.behavior3.core.Condition'
+require 'behavior3.core.Condition'
 
 local findTarget = b3.Class("FindTarget", b3.Condition)
 b3.FindTarget = findTarget

@@ -1,4 +1,4 @@
-require 'lib.behavior3.core.Condition'
+require 'behavior3.core.Condition'
 
 local isfarawayTarget = b3.Class("IsfarawayTarget", b3.Condition)
 b3.IsfarawayTarget = isfarawayTarget

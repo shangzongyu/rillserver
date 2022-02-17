@@ -1,4 +1,4 @@
-require 'lib.behavior3.core.Decorator'
+require 'behavior3.core.Decorator'
 
 local maxTime = b3.Class("MaxTime", b3.Decorator)
 b3.MaxTime = maxTime

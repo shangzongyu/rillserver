@@ -1,4 +1,4 @@
-require 'lib.behavior3.core.Action'
+require 'behavior3.core.Action'
 
 local attack = b3.Class("Attack", b3.Action)
 b3.Attack = attack

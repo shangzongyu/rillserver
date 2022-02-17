@@ -1,4 +1,4 @@
-require "lib.behavior3.core.Decorator"
+require "behavior3.core.Decorator"
 
 local repeatUntilSuccess = b3.Class("RepeatUntilSuccess", b3.Decorator)
 b3.RepeatUntilSuccess = repeatUntilSuccess

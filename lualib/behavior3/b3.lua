@@ -1,4 +1,4 @@
-local json = require 'lib.behavior3.json'
+local json = require 'behavior3.json'
 _class = {}
 
 b3 = {
@@ -26,7 +26,7 @@ b3 = {
     end,
 
     Class = function(classname, super)
-            local superType = type(super)
+        local superType = type(super)
         local cls
 
         --如果父类既不是函数也不是table则说明父类为空

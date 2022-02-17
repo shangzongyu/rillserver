@@ -1,5 +1,5 @@
-require 'lib.behavior3.core.Tick'
-local json = require 'lib.behavior3.json'
+require 'behavior3.core.Tick'
+local json = require 'behavior3.json'
 local behaviorTree = b3.Class("BehaviorTree")
 b3.BehaviorTree = behaviorTree
 
@@ -18,10 +18,10 @@ function behaviorTree:load(jsonData, names)
     local data
     if type(jsonData) == 'table' then data = jsonData end
     if type(jsonData) == 'string' then
-    	-- local f = assert(io.open(jsonData,"r"))
-    	-- local t = f:read("*all")
-    	-- f:close()
-    	local t = love.filesystem.read(jsonData)
+    	 local f = assert(io.open(jsonData,"r"))
+    	 local t = f:read("*all")
+    	 f:close()
+    	--local t = love.filesystem.read(jsonData)
     	data = json.decode(t)
     end
 

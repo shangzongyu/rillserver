@@ -1,4 +1,4 @@
-require 'lib.behavior3.b3'
+require 'behavior3.b3'
 
 local baseNode = b3.Class("BaseNode")
 b3.BaseNode = baseNode

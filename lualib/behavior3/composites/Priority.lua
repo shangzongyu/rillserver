@@ -1,4 +1,4 @@
-require 'lib.behavior3.core.Composite'
+require 'behavior3.core.Composite'
 
 local priority = b3.Class("Priority", b3.Composite)
 b3.Priority = priority
