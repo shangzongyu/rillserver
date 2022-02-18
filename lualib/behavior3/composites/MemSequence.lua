@@ -16,7 +16,7 @@ end
 
 function memSequence:tick( tick)
     local child = tick.blackboard:get('runningChild', tick.tree.id, self.id)
-	ERROR(child)
+
     for i=child, #self.children do
         if type(self.children[i]) == "table" then
             local status = self.children[i]:_execute(tick)
