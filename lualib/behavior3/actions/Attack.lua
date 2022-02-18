@@ -14,15 +14,15 @@ end
 
 
 function attack:tick(tick)
-	local actor = tick.blackboard:get('actor')
-	local target = tick.blackboard:get('target')
-	local distance = math.abs(target.x - actor.x) + math.abs(target.y - actor.y)
-	local attackDis = 5
-    local skill = self.properties.skill
-	if distance <= attackDis then
-		Actions.attack(actor,target)
-		return b3.SUCCESS
-	end
+	-- local actor = tick.blackboard:get('actor')
+	-- local target = tick.blackboard:get('target')
+	-- local distance = math.abs(target.x - actor.x) + math.abs(target.y - actor.y)
+	-- local attackDis = 5
+    -- local skill = self.properties.skill
+	-- if distance <= attackDis then
+	-- 	Actions.attack(actor,target)
+	-- 	return b3.SUCCESS
+	-- end
 
 	return b3.RUNNING
 end

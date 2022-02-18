@@ -32,6 +32,8 @@ require 'behavior3.actions.Failer'
 require 'behavior3.actions.Runner'
 require 'behavior3.actions.Succeeder'
 require 'behavior3.actions.Wait'
+require 'behavior3.actions.Attack'
+require 'behavior3.actions.SeekTarget'
 
 require 'behavior3.composites.MemPriority'
 require 'behavior3.composites.MemSequence'
@@ -45,8 +47,15 @@ require 'behavior3.decorators.MaxTime'
 require 'behavior3.decorators.Repeater'
 require 'behavior3.decorators.RepeatUntilFailure'
 require 'behavior3.decorators.RepeatUntilSuccess'
+
+require 'behavior3.conditions.FindTarget'
+
 local behaviorTree = b3.BehaviorTree.new()
-behaviorTree:load("behavior3.json",{})
+-- behaviorTree:load("/home/donney/work/rillserver/lualib/behavior3/jsons/behavior3.json",{})
+
+behaviorTree:load("lualib/behavior3/jsons/behavior3.json",{})
+local blackBoard = b3.Blackboard.new()
+behaviorTree:tick(nil, blackBoard)
 
 local function start_host()
     for k,v in pairs(servconf.host_common) do

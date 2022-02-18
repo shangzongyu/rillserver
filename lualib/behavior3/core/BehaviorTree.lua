@@ -37,13 +37,15 @@ function behaviorTree:load(jsonData, names)
 		id = i
 		spec = v
 
+		print(b3[spec.name])
 
 		if names[spec.name] then
 			Cls = names[spec.name]
 		elseif b3[spec.name] then
 			Cls = b3[spec.name]
 		else
-			print("Error : BehaviorTree.load : Invalid node name + " .. spec.name .. ".")
+			ERROR("Error : BehaviorTree.load : Invalid node name + " .. spec.name .. ".")
+			return
 		end
 		node = Cls.new(spec.properties)
 		node.id = spec.id or node.id
