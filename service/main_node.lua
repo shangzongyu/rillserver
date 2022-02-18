@@ -51,10 +51,9 @@ require 'behavior3.decorators.RepeatUntilSuccess'
 require 'behavior3.conditions.FindTarget'
 
 local behaviorTree = b3.BehaviorTree.new()
--- behaviorTree:load("/home/donney/work/rillserver/lualib/behavior3/jsons/behavior3.json",{})
-
 behaviorTree:load("lualib/behavior3/jsons/behavior3.json",{})
 local blackBoard = b3.Blackboard.new()
+behaviorTree:tick(nil, blackBoard)
 behaviorTree:tick(nil, blackBoard)
 
 local function start_host()

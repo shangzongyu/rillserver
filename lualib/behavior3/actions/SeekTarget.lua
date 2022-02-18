@@ -9,7 +9,7 @@ function seekTarget:ctor(settings)
     self.properties = {distance = -1}
 
 end
-
+local i = 0;
 function seekTarget:tick(tick)
     -- local target = tick.blackboard:get('target')
     -- local actor = tick.blackboard:get('actor')
@@ -28,7 +28,11 @@ function seekTarget:tick(tick)
     --     elseif d == 'WN' then Actions.moveWN(actor)
     --     elseif d == 'WS' then Actions.moveWS(actor)
     -- end
-
-    -- return b3.RUNNING
-    return b3.SUCCESS
+    i = i + 1
+    ERROR("seek target")
+    if i == 2 then
+        return b3.SUCCESS
+    end
+    return b3.RUNNING
+    --return b3.SUCCESS
 end

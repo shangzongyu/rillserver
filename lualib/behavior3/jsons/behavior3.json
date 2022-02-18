@@ -49,7 +49,7 @@
     },
     "c441b480-210b-4bdd-8089-42b34dd6f47d": {
       "id": "c441b480-210b-4bdd-8089-42b34dd6f47d",
-      "name": "Sequence",
+      "name": "MemSequence",
       "title": "攻击",
       "description": "",
       "properties": {},

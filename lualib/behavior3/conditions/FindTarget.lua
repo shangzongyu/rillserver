@@ -29,7 +29,7 @@ function findTarget:tick(tick)
     -- if distance <= self.properties.distance then
     --     return b3.SUCCESS
     -- end
-
     -- return b3.FAILURE
+    ERROR("find target")
     return b3.SUCCESS
 end

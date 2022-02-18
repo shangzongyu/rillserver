@@ -23,6 +23,6 @@ function attack:tick(tick)
 	-- 	Actions.attack(actor,target)
 	-- 	return b3.SUCCESS
 	-- end
-
+	ERROR("attack")
 	return b3.RUNNING
 end

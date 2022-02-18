@@ -44,7 +44,7 @@ function behaviorTree:load(jsonData, names)
 		elseif b3[spec.name] then
 			Cls = b3[spec.name]
 		else
-			ERROR("Error : BehaviorTree.load : Invalid node name + " .. spec.name .. ".")
+			ERROR("BehaviorTree.load : Invalid node name + " .. spec.name .. ".")
 			return
 		end
 		node = Cls.new(spec.properties)
@@ -64,13 +64,11 @@ function behaviorTree:load(jsonData, names)
 		if v.child then
 			node.child = nodes[v.child]
 		end
-
 		if v.children then
 			for i = 1, #v.children do
 				local cid = spec.children[i]
-				print("<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 				-- print(spec.children[i].title,spec.children[i],nodes[cid].title,nodes[cid])
-				print(nodes[cid].title)
+				INFO(nodes[cid].title)
 				-- print()
 				table.insert(node.children, nodes[cid])
 			end
@@ -78,7 +76,7 @@ function behaviorTree:load(jsonData, names)
 	end
 
 	self.root = nodes[data.root]
-	print("root name:"..self.root.name.." title:"..self.root.title)
+	INFO("root name:"..self.root.name.." title:"..self.root.title)
 end
 
 function behaviorTree:dump()
