@@ -1,3 +1,12 @@
+###############################################################################
+# Copyright(C)   machine stdio                                                #
+# Author:        donney                                                       #
+# Email:         donney_luck@sina.cn                                          #
+# Date:          2022-02-18                                                   #
+# Description:   make server&proto&lib                                        #
+# Modification:  null                                                         #
+###############################################################################
+
 PLAT ?= none
 PLATS = linux freebsd macosx
 .PHONY : none $(PLATS) all clean update3rd proto publish
