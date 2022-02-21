@@ -8,12 +8,11 @@ COLOR_GREEN='\033[32m'
 COLOR_RESET='\033[0m'
 
 HOST='127.0.0.1'
-USER='fgame'
-WORK_DIR='fgame'
+USER='donney'
+WORK_DIR='~/work'
 
 function usage(){
     echo -e "$COLOR_GREEN usage is : $0 [tar file] $COLOR_RESET"
-    echo -e "$COLOR_GREEN需要指定需要安装的文件$COLOR_RESET"
     exit 2
 }
 
