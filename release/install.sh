@@ -16,7 +16,6 @@ function usage(){
     exit 2
 }
 
-
 if [ $# -lt 1 ]; then
     usage
 fi

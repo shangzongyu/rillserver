@@ -15,9 +15,9 @@ case "$1" in
     copy|deploy)
         ;;
     *)
-        echo -e "Usage: $0 {copy|deploy}"
-        echo -e "\t${COLOR_GREEN}copy   - only upload the file with scp${COLOR_RESET}"
-        echo -e "\t${COLOR_GREEN}deploy - upload the file and extract files then restart the program${COLOR_RESET}\n"
+        echo -e "${COLOR_RED}Usage: $0 {copy|deploy}${COLOR_RESET}"
+        echo -e "${COLOR_GREEN}copy   - only upload the file with scp${COLOR_RESET}"
+        echo -e "${COLOR_GREEN}deploy - upload the file and extract files then restart the program${COLOR_RESET}\n"
         exit 2
 esac
 
@@ -76,7 +76,7 @@ function upload(){
         tar cvf $bak_dir/$GAME_NAME-$(date '+%Y-%m-%d_%H_%M_%S').tar.gz ./$GAME_NAME --exclude=log/* --exclude=business/* --exclude=busilog/*;
         tar xvf $upload_dir/$(basename $FILE) -C ${game_dir};
         cd $game_dir;
-        bash sh/template.sh $HOST;
+        #bash sh/template.sh $HOST;
         bash sh/restart.sh"
     fi
 }

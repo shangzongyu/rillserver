@@ -4,8 +4,7 @@ start = "main_node"
 
 nodename = "node1"
 
-
 if $DAEMON then
-	daemon = app_root.."run/skynet.pid"
-	logger = "userlog"
+        daemon = app_root.."run/skynet.pid"
+        logger = app_root.."run/skynet.log"
 end
