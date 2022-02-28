@@ -15,7 +15,6 @@ local runconf = require(skynet.getenv("runconfig"))
 local servconf = runconf.service
 local nodename = skynet.getenv("nodename")
 
---for test b3local behaviorTree = b3.BehaviorTree.new()
 require 'behavior3.b3'
 require 'behavior3.core.Action'
 require 'behavior3.core.BaseNode'

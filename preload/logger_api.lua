@@ -1,3 +1,12 @@
+-------------------------------------------------------------------------------
+-- Copyright(C)   machine stdio                                              --
+-- Author:        donney                                                     --
+-- Email:         donney_luck@sina.cn                                        --
+-- Date:          2022-02-28                                                 --
+-- Description:   logger file                                                --
+-- Modification:  modify                                                     --
+-------------------------------------------------------------------------------
+
 local skynet = require "skynet"
 local table = table
 
@@ -13,6 +22,7 @@ local log_level = {
 }
 
 local defaultLevel = tonumber(skynet.getenv "log_default_lv") or log_level.LOG_DEBUG
+local daemon = skynet.getenv("daemon")
 local prefix = ""
 function LOG_PREFIX(pre)
   prefix = "[" .. pre .. "]"
@@ -25,8 +35,11 @@ local function logger(str, level, color)
         local info = table.pack(...)
         info[#info+1] = "\x1b[0m"
         local now = os.time()
-        local data_time = os.date("[%Y-%m-%d %H:%M:%S]",now)
-        skynet.error(string.format("%s %s%s%s", data_time, color, str, prefix), table.unpack(info))
+        local date_time = ""
+        if daemon == nil then
+          date_time = os.date("[%Y-%m-%d %H:%M:%S]",now)
+        end
+        skynet.error(string.format("%s %s%s%s", date_time, color, str, prefix), table.unpack(info))
     end
   end
 end
@@ -40,6 +53,7 @@ end
 --   ERROR   = logger("[error]", log_level.LOG_ERROR, "\x1b[31m"),
 --   FATAL = logger("[fatal]", log_level.LOG_FATAL,"\x1b[31m")
 -- }
+
 local M = {
   TRACE = logger("[T]", log_level.LOG_TRACE, "\x1b[35m"),
   DEBUG = logger("[D]", log_level.LOG_DEBUG, "\x1b[32m"),

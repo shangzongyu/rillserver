@@ -3,7 +3,7 @@
 *.luarc.json
 *.o
 /TAGS
-run
+run/*
 skynet
 release/build
 proto/**/*.pb
