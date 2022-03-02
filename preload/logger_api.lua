@@ -27,19 +27,29 @@ local prefix = ""
 function LOG_PREFIX(pre)
   prefix = "[" .. pre .. "]"
 end
-
+local color_gray    = "\x1b[30m"
+local color_red     = "\x1b[31m"
+local color_green   = "\x1b[32m"
+local color_yellow  = "\x1b[33m"
+local color_blud    = "\x1b[34m"
+local color_purple  = "\x1b[35m"
+local color_cyan    = "\x1b[36m"
+local color_white   = "\x1b[37m"
+local color_reset   = "\x1b[0m"
 --日志 --
 local function logger(str, level, color)
   return function (...)
     if level >= defaultLevel then
         local info = table.pack(...)
-        info[#info+1] = "\x1b[0m"
         local now = os.time()
         local date_time = ""
         if daemon == nil then
-          date_time = os.date("[%Y-%m-%d %H:%M:%S]",now)
+          date_time = os.date("[%Y-%m-%d %H:%M:%S] ",now)
+          info[#info+1] = "\x1b[0m"
+        else
+          color = ""
         end
-        skynet.error(string.format("%s %s%s%s", date_time, color, str, prefix), table.unpack(info))
+        skynet.error(string.format("%s%s%s%s", date_time, color, str, prefix), table.unpack(info))
     end
   end
 end
