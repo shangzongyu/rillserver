@@ -14,35 +14,35 @@ function mysqldb:start(conf)
     local user = conf.user
     local password = conf.password
 
-	local function on_connect(db)
-		db:query("set charset utf8");
-	end
-	
-	local db = mysql.connect({
-		host = host,
-		port = port,
-		database = database,
-		user = user,
-		password = password,
-		max_packet_size = 1024 * 1024,
-		on_connect = on_connect
-	})
-	if not db then
-		log.error("failed to connect conf: %s", tool.dump(conf))
-		assert(nil)
+    local function on_connect(db)
+        db:query("set charset utf8");
+    end
+
+    local db = mysql.connect({
+        host = host,
+        port = port,
+        database = database,
+        user = user,
+        password = password,
+        max_packet_size = 1024 * 1024,
+        on_connect = on_connect
+    })
+    if not db then
+        log.error("failed to connect conf: %s", tool.dump(conf))
+        assert(nil)
         return nil
-	end
-	--log.debug("mysql success to connect to mysql server")
-	
-	local o = {db = db, table_desc={}}
-	setmetatable(o, mysqldb)
+    end
+    --log.debug("mysql success to connect to mysql server")
+
+    local o = {db = db, table_desc={}}
+    setmetatable(o, mysqldb)
     return o
 end
 
 function mysqldb:get_table_desc(cname)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     local desc = table_desc[cname]
     if desc then
         return desc
@@ -114,9 +114,9 @@ end
 ----以下是对外接口
 
 function mysqldb:findOne(cname, selector, field_selector)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     local selector_str = build_selector(selector)
     local field_selector_str = build_field_selector(field_selector)
 
@@ -130,9 +130,9 @@ function mysqldb:findOne(cname, selector, field_selector)
 end
 
 function mysqldb:find(cname, selector, field_selector)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     local selector_str = build_selector(selector)
     local field_selector_str = build_field_selector(field_selector)
 
@@ -144,9 +144,9 @@ function mysqldb:find(cname, selector, field_selector)
 end
 
 function mysqldb:alter(cname, selector)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     local desc = self:get_table_desc(cname)
     if not desc then
         return
@@ -181,9 +181,9 @@ end
 
 
 function mysqldb:update(cname, selector, field_selector, upsert)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     --self:alter(cname, selector)
 
     local selector_str = build_selector(selector)
@@ -193,10 +193,10 @@ function mysqldb:update(cname, selector, field_selector, upsert)
     --log.debug("sql: " .. sql)
     local ret = db:query(sql)
     --log.debug("update ret: " .. tool.dump(ret))
-	
-	if upsert and ret.affected_rows == 0 then
-		return self:insert(cname, field_selector)
-	end
+
+    if upsert and ret.affected_rows == 0 then
+        return self:insert(cname, field_selector)
+    end
     return ret
 end
 
@@ -223,9 +223,9 @@ local function build_insert_data(data)
 end
 
 function mysqldb:create_table(cname, data)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     assert(type(data) == "table")
 
     local t = {}
@@ -239,14 +239,14 @@ function mysqldb:create_table(cname, data)
            table.insert(t, string.format("%s varchar(1024)", k))
        end
     end
-	
-	if data.playerid then
+
+    if data.playerid then
         table.insert(t, "PRIMARY KEY(playerid)")
     end
-	
+
     if not data.playerid and not data.id  then
         table.insert(t, "id INT NOT NULL AUTO_INCREMENT")
-		table.insert(t, "PRIMARY KEY(id)")
+        table.insert(t, "PRIMARY KEY(id)")
     end
 
     
@@ -263,9 +263,9 @@ function mysqldb:create_table(cname, data)
 end
 
 function mysqldb:insert(cname, data)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     if not self:get_table_desc(cname) then
         self:create_table(cname, data)
     end
@@ -279,9 +279,9 @@ function mysqldb:insert(cname, data)
 end
 
 function mysqldb:replace(cname, data)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     if not get_table_desc(cname) then
         self:create_table(cname, data)
     end
@@ -299,9 +299,9 @@ function mysqldb:replace(cname, data)
 end
 
 function mysqldb:delete(cname, selector)
-	local table_desc = self.table_desc
-	local db = self.db
-	
+    local table_desc = self.table_desc
+    local db = self.db
+
     local selector_str = build_selector(selector)
     local sql = string.format("delete from %s where %s", cname, selector_str)
     local ret = db:query(sql)
