@@ -42,7 +42,7 @@ return {
     gateway_common = {maxclient = 10240, nodelay = true},
     gateway = {
       [1] = {port = 11798,  node = "node1"},
-      --[2] = {port = 11799,  node = "node2"},
+      [2] = {port = 11799,  node = "node2"},
     },
     --global服务
     global = {
@@ -66,7 +66,8 @@ return {
       gamedb = {db_type = "mongodb", host = "127.0.0.1", db_name = "game"},
       globaldb = {db_type = "mongodb", host = "127.0.0.1", db_name = "global"},
       logdb = {db_type = "mongodb", host = "127.0.0.1", db_name = "log"},
-      redisdb = {db_type = "redisdb", host = "127.0.0.1", db_name = "redis"}
+      redisdb = {db_type = "redisdb", host = "127.0.0.1", db_name = "redis"},
+      mysqldb = {db_type = "mysqldb", host = "192.168.101.66", db_name = "mysql", user="admin", password="tang1988"}
     },
     --dbproxy_common = {
     --	accountdb = {db_type = "mysqldb", host = "139.196.180.249", database = "account", port = 3306, user='admin', password='zhengsu@2018'}, --host,port,username,password,authmod
@@ -82,12 +83,15 @@ return {
     -- },
     dbproxy = {
       [1] = {node = "node1"},
-      [2] = {node = "node1"},
+      [2] = {node = "node2"},
     },
     --host服务
     host_common = {
-      web     =   {node = "node1", port = 12111, name="web"},
-      console =   {node = "node1", port = 12112, name="console"}, --尚未实现
+      web  =  {
+        [1] = {node = "node1", port = 12111, name="web"},
+        [2] = {node = "node2", port = 12112, name="web"}
+      },
+      console =   {node = "node1", port = 12113, name="console"}, --尚未实现
     }
   },
   --玩家数据表配置

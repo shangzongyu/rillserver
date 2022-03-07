@@ -15,54 +15,52 @@ local runconf = require(skynet.getenv("runconfig"))
 local servconf = runconf.service
 local nodename = skynet.getenv("nodename")
 
-require 'behavior3.b3'
-require 'behavior3.core.Action'
-require 'behavior3.core.BaseNode'
-require 'behavior3.core.BehaviorTree'
-require 'behavior3.core.Blackboard'
-require 'behavior3.core.Composite'
-require 'behavior3.core.Condition'
-require 'behavior3.core.Decorator'
-require 'behavior3.core.Decorator'
-require 'behavior3.core.Tick'
+-- require 'behavior3.b3'
+-- require 'behavior3.core.Action'
+-- require 'behavior3.core.BaseNode'
+-- require 'behavior3.core.BehaviorTree'
+-- require 'behavior3.core.Blackboard'
+-- require 'behavior3.core.Composite'
+-- require 'behavior3.core.Condition'
+-- require 'behavior3.core.Decorator'
+-- require 'behavior3.core.Decorator'
+-- require 'behavior3.core.Tick'
 
-require 'behavior3.actions.Error'
-require 'behavior3.actions.Failer'
-require 'behavior3.actions.Runner'
-require 'behavior3.actions.Succeeder'
-require 'behavior3.actions.Wait'
-require 'behavior3.actions.Attack'
-require 'behavior3.actions.SeekTarget'
+-- require 'behavior3.actions.Error'
+-- require 'behavior3.actions.Failer'
+-- require 'behavior3.actions.Runner'
+-- require 'behavior3.actions.Succeeder'
+-- require 'behavior3.actions.Wait'
+-- require 'behavior3.actions.Attack'
+-- require 'behavior3.actions.SeekTarget'
 
-require 'behavior3.composites.MemPriority'
-require 'behavior3.composites.MemSequence'
-require 'behavior3.composites.Priority'
-require 'behavior3.composites.Sequence'
-require 'behavior3.composites.Selector'
+-- require 'behavior3.composites.MemPriority'
+-- require 'behavior3.composites.MemSequence'
+-- require 'behavior3.composites.Priority'
+-- require 'behavior3.composites.Sequence'
+-- require 'behavior3.composites.Selector'
 
-require 'behavior3.decorators.Inverter'
-require 'behavior3.decorators.Limiter'
-require 'behavior3.decorators.MaxTime'
-require 'behavior3.decorators.Repeater'
-require 'behavior3.decorators.RepeatUntilFailure'
-require 'behavior3.decorators.RepeatUntilSuccess'
+-- require 'behavior3.decorators.Inverter'
+-- require 'behavior3.decorators.Limiter'
+-- require 'behavior3.decorators.MaxTime'
+-- require 'behavior3.decorators.Repeater'
+-- require 'behavior3.decorators.RepeatUntilFailure'
+-- require 'behavior3.decorators.RepeatUntilSuccess'
 
-require 'behavior3.conditions.FindTarget'
+-- require 'behavior3.conditions.FindTarget'
 
-local behaviorTree = b3.BehaviorTree.new()
-behaviorTree:load("lualib/behavior3/jsons/behavior3.json",{})
-local blackBoard = b3.Blackboard.new()
-behaviorTree:tick(nil, blackBoard)
-behaviorTree:tick(nil, blackBoard)
+-- local behaviorTree = b3.BehaviorTree.new()
+-- behaviorTree:load("lualib/behavior3/jsons/behavior3.json",{})
+-- local blackBoard = b3.Blackboard.new()
+-- behaviorTree:tick(nil, blackBoard)
+-- behaviorTree:tick(nil, blackBoard)
 
 local function start_host()
-    for k,v in pairs(servconf.host_common) do
-                if nodename == v.node and v.name=="web" then
-                        -- ERROR("start "..v.name.." in port: " .. v.port.."...")
-                        skynet.uniqueservice(v.name, "host", v.port)
-                end
+    for k,v in pairs(servconf.host_common.web) do
+        if nodename == v.node and v.name == "web" then
+            skynet.uniqueservice(v.name, "host", v.port)
+        end
     end
-    -- ERROR("======start host server======= ")
 end
 
 local function start_console()
@@ -95,10 +93,10 @@ local function start_gateway()
                 name = name,
             })
             -- ERROR("=====start ", name, "port:", g.port, "...======")
-        else
-            local proxy = cluster.proxy(v.node, name)
-            skynet.name(name, proxy)
-        end
+        -- else
+        --     local proxy = cluster.proxy(v.node, name)
+        --     skynet.name(name, proxy)
+       end
     end
 end
 
@@ -167,9 +165,9 @@ local function start_dbproxy()
         local name = string.format("dbproxy%d", i)
         if nodename == v.node then
             local p = skynet.newservice("dbproxy", "dbproxy", i)
-        else
-            local proxy = cluster.proxy(v.node, name)
-            skynet.name(name, proxy)
+        -- else
+        --     local proxy = cluster.proxy(v.node, name)
+        --     skynet.name(name, proxy)
         end
     end
 end

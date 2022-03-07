@@ -14,6 +14,17 @@ local json      = require "cjson"
 local libdbproxy = require "libdbproxy"
 local runconf = require(skynet.getenv("runconfig"))
 
+-- 玩家数据
+local playerdata = {
+    baseinfo = {}, --基本信息
+    bag = {}, --背包
+    task = {}, --任务
+    friend = {}, --好友
+    mail = {}, --邮件
+    achieve = {}, --成就
+    title = {}, --称号
+}
+
 local agent_info = {
     base_info ={
         uid = 0,

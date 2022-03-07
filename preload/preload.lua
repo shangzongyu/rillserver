@@ -4,7 +4,7 @@ require "logger_api"
 
 local serpent_lib = require "serpent"
 function serpent(value)
-  return serpent_lib.line(value)
+  return serpent_lib.block(value)
 end
 
 local inspect_lib = require "inspect"

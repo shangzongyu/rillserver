@@ -40,7 +40,7 @@ local function main_loop(fd)
     send(fd, "Welcome to host console")
     local ok, err = pcall(function()
         while true do
-            local cmdline = socket.readline(fd, "\n")
+            local cmdline = socket.readline(fd, "\r\n")
             if not cmdline then
                 break
             end

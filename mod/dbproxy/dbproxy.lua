@@ -15,7 +15,8 @@ local db = {
     ["game"] = nil,
     ["global"] = nil,
     ["log"] = nil,
-    ["redis"] = nil,
+  --  ["redis"] = nil,
+  --  ["mysql"] = nil
 }
 
 local function init_db(conf)
@@ -33,8 +34,10 @@ function event.awake()
     assert(db.global)
     db.log = init_db(dbconf.logdb)
     assert(db.log)
-    db.redis = init_db(dbconf.redisdb)
-    assert(db.redis)
+    -- db.redis = init_db(dbconf.redisdb)
+    -- assert(db.redis)
+   -- db.mysql = init_db(dbconf.mysqldb)
+   -- assert(db.mysql)
 end
 
 -- mongodb api

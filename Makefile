@@ -41,6 +41,7 @@ update3rd:
 	cd skynet && $(MAKE) update3rd
 proto:
 	cd proto && sh export.sh
+	cd storage && sh export.sh
 pack:
 	cd release && sh pack.sh
 publish:

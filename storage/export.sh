@@ -1,0 +1,17 @@
+###############################################################################
+# Copyright(C)   machine stdio                                                #
+# Author:        donney                                                       #
+# Email:         donney_luck@sina.cn                                          #
+# Date:          2022-02-10                                                   #
+# Description:   export proto                                                 #
+# Modification:  null                                                         #
+###############################################################################
+
+#!/bin/bash
+#FILES=`ls *.proto`
+#use fd better
+FILES=`fd -e proto`
+for file in ${FILES[*]}; do
+    echo "export protofile:" $file
+    protoc -o ${file%.proto}.pb $file
+done
