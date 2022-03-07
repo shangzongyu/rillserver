@@ -18,7 +18,7 @@ return {
     --debug_console服务
     debug_console = {
       [1] = {port=10701, node = "node1"},
-      --[2] = {port=10702, node = "node2"},
+      [2] = {port=10702, node = "node2"},
       --[3] = {port=10703, node = "admin"},
     },
     --game服务
@@ -87,11 +87,8 @@ return {
     },
     --host服务
     host_common = {
-      web  =  {
-        [1] = {node = "node1", port = 12111, name="web"},
-        [2] = {node = "node2", port = 12112, name="web"}
-      },
-      console =   {node = "node1", port = 12113, name="console"}, --尚未实现
+      web = { node = "node1", port = 12111, name = "web" },
+      console = { node = "node1", port = 12112, name = "console" }, --尚未实现
     }
   },
   --玩家数据表配置

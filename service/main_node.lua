@@ -55,13 +55,18 @@ local nodename = skynet.getenv("nodename")
 -- behaviorTree:tick(nil, blackBoard)
 -- behaviorTree:tick(nil, blackBoard)
 
+--全部服务都需要host服务 但是只有node1 启动web和console
 local function start_host()
-    for k,v in pairs(servconf.host_common.web) do
-        if nodename == v.node and v.name == "web" then
-            skynet.uniqueservice(v.name, "host", v.port)
-        end
-    end
+    local v = servconf.host_common.web
+    skynet.uniqueservice(v.name, "host", v.port)
 end
+-- local function start_host()
+--     for k,v in pairs(servconf.host_common) do
+--         if nodename == v.node and v.name == "web" then
+--             skynet.uniqueservice(v.name, "host", v.port)
+--         end
+--     end
+-- end
 
 local function start_console()
     for i,v in pairs(servconf.debug_console) do
