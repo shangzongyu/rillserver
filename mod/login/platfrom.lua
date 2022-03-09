@@ -1,5 +1,4 @@
 -- 平台参数配置
-
 local M = {}
 
 M.uc = {
@@ -12,10 +11,10 @@ M.uc = {
 }
 
 M.guopan = {
-	appid = 108312,
-	apiKey = "QBD66SGZ8U4ILDB3M6YU60FMC4PQ8QJC9MNEPVSDTZED0S2XADBTGQ80OPYJXWLJCLIENT SECRET KEY：JMH029Z9E3IX5YRO",
-	auth_path = "userapi.guopan.cn",
-	auth_url = "/gamesdk/verify/"
+    appid = 108312,
+    apiKey = "QBD66SGZ8U4ILDB3M6YU60FMC4PQ8QJC9MNEPVSDTZED0S2XADBTGQ80OPYJXWLJCLIENT SECRET KEY：JMH029Z9E3IX5YRO",
+    auth_path = "userapi.guopan.cn",
+    auth_url = "/gamesdk/verify/"
 }
 
 M.ccplay = {

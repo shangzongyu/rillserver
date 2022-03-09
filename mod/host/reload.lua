@@ -18,8 +18,8 @@ local function call_clusters(ignore, ...) --ignore -> ignore self
 end
 
 function dispatch.host_mod(addr, fd , q)
-    local service_name = q.name
-    local mod = q.mod or "ALL"
+    local service_name = q.name --服务名字
+    local mod = q.mod or "ALL"  --服务内的模块名字
     INFO("start reload..."..mod)
 
     local list = {}
@@ -28,7 +28,7 @@ function dispatch.host_mod(addr, fd , q)
         local cmd = string.match(v, "snlua (%w+) *.*")
         if cmd == service_name then
             log.debug("reload %s", cmd)
-            local diff_time = skynet.call(k, "debug", "RELOAD", mod)
+            local diff_time = skynet.call(k, "lua", "faci.reload", mod)
             list[skynet.address(k)] = string.format("%.05fs (%s)", diff_time, v)
         end
     end

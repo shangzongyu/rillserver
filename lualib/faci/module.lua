@@ -31,7 +31,6 @@ function M.reload_modules()
     lfstool.attrdir(path, function(file)
 	local file = string.match(file, ".*mod/(.*)%.lua")
 		if file then
-			-- log.info(string.format("%s%d reload file:%s", env.name, env.id, file))
             INFO("reload file:"..file)
             dt, result = reload.reload(file)
             diff_time = diff_time + dt

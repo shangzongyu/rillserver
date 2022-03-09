@@ -6,7 +6,7 @@ return {
     --admin = "127.0.0.1:2527", --后台交互节点
     --master = "127.0.0.1:2527",
     node1 = "127.0.0.1:2528",
-    node2 = "127.0.0.1:2529",
+    --node2 = "127.0.0.1:2529",
   },
   --通信协议
   prototype = "tcp",  --tcp/ws
@@ -18,7 +18,7 @@ return {
     --debug_console服务
     debug_console = {
       [1] = {port=10701, node = "node1"},
-      [2] = {port=10702, node = "node2"},
+      --[2] = {port=10702, node = "node2"},
       --[3] = {port=10703, node = "admin"},
     },
     --game服务
@@ -75,15 +75,9 @@ return {
     --	globaldb = {db_type = "mysqldb", host = "139.196.180.249", database = "global", port = 3306, user='admin', password='zhengsu@2018'},
     --	logdb = {db_type = "mysqldb", host = "139.196.180.249", database = "log", port = 3306, user='admin', password='zhengsu@2018'},
     --},
-    -- dbproxy_common = {
-    --     accountdb = {db_type = "mysqldb", host = "192.168.137.99", database = "account", port = 3306, user='root', password='dongyf'}, --host,port,username,password,authmod
-    --     gamedb = {db_type = "mysqldb", host = "192.168.137.99", database = "game", port = 3306, user='root', password='dongyf'},
-    --     globaldb = {db_type = "mysqldb", host = "192.168.137.99", database = "global", port = 3306, user='root', password='dongyf'},
-    --     logdb = {db_type = "mysqldb", host = "192.168.137.99", database = "log", port = 3306, user='root', password='dongyf'},
-    -- },
     dbproxy = {
       [1] = {node = "node1"},
-      [2] = {node = "node2"},
+      [2] = {node = "node1"},
     },
     --host服务
     host_common = {

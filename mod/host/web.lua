@@ -18,6 +18,8 @@ local default_page = [[
     <p>
     hehe
     <p>
+    <a href="/?cmd=web.help">help</a>
+    <p>
     <a href="/?cmd=web.test">test</a>
     <p>
     <a href="http://www.pal5h.com">pal5h</a>
@@ -33,7 +35,7 @@ local default_page = [[
 
 --http://123.207.111.118:8111/?cmd=web.test
 function dispatch.test()
-    return "good man fuck you"
+    return "good man fuck you hotfix"
 end
 
 local function response(id, ...)

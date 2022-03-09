@@ -19,22 +19,25 @@ env.users = env.users or {}
 --true/false
 function dispatch.login(uid, data)
     local user = env.users[uid]
+    INFO("login1"..serpent(user))
     --正常登录
     if not user then
         env.users[uid] = data
         --log.debug("center login: %d", uid)
         return true
     end
+    INFO("login2"..serpent(user))
     --登录过程中
     if not user.agent then
         log.debug("center %d login fail not user.game", uid)
         return false
     end
+    INFO("login3"..serpent(user))
     --踢下线
-    --if not dispatch.logout(uid, user.key, "login in other place") then
-    --	log.debug("center %d login fail not not D.logout", uid)
-    --	return false
-    --end
+    if not dispatch.logout(uid, user.key, "login in other place") then
+        log.debug("center %d login fail not not D.logout", uid)
+        return false
+    end
      --gate的 向gate 发kick 原因 需要关闭客户端之前的连接
      --local ret = cluster.call(user.node, user.gate, "kick", user.fd)
     local ret = skynet.call(user.gate, 'lua', 'kick', user.fd)

@@ -3,9 +3,9 @@ package.path = "../skynet/lualib/?.lua;../lualib/?.lua;../examples/?.lua;./?.lua
 skynet_root = "../skynet/"
 app_root = "../"
 
-if _VERSION ~= "Lua 5.3" then
-	error "Use lua 5.3"
-end
+-- if _VERSION ~= "Lua 5.3" then
+-- 	error "Use lua 5.3"
+-- end
 
 local M = {}
 

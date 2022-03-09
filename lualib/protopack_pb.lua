@@ -98,7 +98,7 @@ function M.pack(cmd, check, msg)
     local f = string.format("> i2 i4 I4 c%d", pblen)
     local str = string.pack(f, len, check, code, pbstr)
     --调试
-    log.info("send:"..bin2hex(str))
+    --log.info("send:"..bin2hex(str))
     -- log.info(string.format("send:cmd(%s) check(%d) msg->%s", cmd, check, tool.dump(msg)))
     INFO("send:cmd("..cmd..") check("..check..") msg->"..serpent.line(msg))
     return str
