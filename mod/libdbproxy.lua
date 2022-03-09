@@ -20,7 +20,6 @@ local function next_dbproxy()
     if next_id > MAX_DBPROXY_COUNT then
         next_id = 1
     end
-    ERROR(dbproxy[next_id])
     return dbproxy[next_id]
 end
 

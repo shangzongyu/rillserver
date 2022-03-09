@@ -95,6 +95,8 @@ end
 
 local function client_dispatch(session, source, str)
     --特殊用法，将session用作fd，减少再次转发给gate
+    --session is fd, don't call skynet ret
+    skynet.ignoreret()
 
     local fd = session
     local cmd, check, msg = protopack.unpack(str)
