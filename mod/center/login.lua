@@ -19,36 +19,33 @@ env.users = env.users or {}
 --true/false
 function dispatch.login(uid, data)
     local user = env.users[uid]
-    INFO("login1"..serpent(user))
     --正常登录
     if not user then
         env.users[uid] = data
-        --log.debug("center login: %d", uid)
+        INFO("center ", uid, "login success")
         return true
     end
-    INFO("login2"..serpent(user))
     --登录过程中
     if not user.agent then
-        log.debug("center %d login fail not user.game", uid)
+        DEBUG("center %d login fail not user.game", uid)
         return false
     end
-    INFO("login3"..serpent(user))
     --踢下线
     if not dispatch.logout(uid, user.key, "login in other place") then
-        log.debug("center %d login fail not not D.logout", uid)
+        DEBUG("center %d login fail not not D.logout", uid)
         return false
     end
      --gate的 向gate 发kick 原因 需要关闭客户端之前的连接
      --local ret = cluster.call(user.node, user.gate, "kick", user.fd)
     local ret = skynet.call(user.gate, 'lua', 'kick', user.fd)
     if not ret then
-        log.debug("center logout call gate fail")
+        DEBUG("center logout call gate fail")
         return false
      end
 
     user = env.users[uid]
     if user then
-        log.debug("have login uid: " .. uid)
+        DEBUG("have login uid: " .. uid)
         return false
     end
     env.users[uid] = data
@@ -59,21 +56,21 @@ end
 function dispatch.register(uid, data)
     local user = env.users[uid]
     if not user then
-        log.debug("center %d register fail, not user", uid)
+        DEBUG("center %d register fail, not user", uid)
         return false
     end
 
     if user.key ~= data.key then
-        log.debug("center %d register fail, key err", uid)
+        DEBUG("center %d register fail, key err", uid)
         return false
     end
 
     if user.agent then
-        log.debug("center %d register fail, has game", uid)
+        DEBUG("center %d register fail, has game", uid)
         return false
     end
 
-    --log.debug("center register: %d", uid)
+    --DEBUG("center register: %d", uid)
     user.agent = data.agent
     user.logined = 1
 
@@ -88,7 +85,7 @@ function dispatch.logout(uid, key, season)
     end
 
     if user.key ~= key then
-        log.debug("center logout key fail")
+        DEBUG("center logout key fail")
         return false
     end
 
@@ -97,14 +94,14 @@ function dispatch.logout(uid, key, season)
         --local ret = cluster.call(user.node, user.agent, "kick", uid, season)
         local ret = skynet.call(user.agent, 'lua', 'kick', uid, season)
         if not ret then
-            log.debug("center logout call agent fail")
+            DEBUG("center logout call agent fail")
             return false
         end
 
         -- --gate的 取消向gate 发kick 原因 gate kick又会调用到此
         -- local ret = cluster.call(user.node, user.gate, "kick", user.fd)
         -- if not ret then
-        --  log.debug("center logout call gate fail")
+        --  DEBUG("center logout call gate fail")
         --  return false
         -- end
     end

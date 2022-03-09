@@ -123,7 +123,7 @@ function M.unpack(str)
     local msg = pb.decode(cmd, pbstr)
 
     -- log.info("recv:cmd(%s) check(%d) msg->%s", cmd, check, tool.dump(msg))
-    INFO("send:cmd("..cmd..") check("..check..") msg->"..serpent.line(msg))
+    INFO("recv:cmd("..cmd..") check("..check..") msg->"..serpent.line(msg))
     return cmd, check, msg
 end
 

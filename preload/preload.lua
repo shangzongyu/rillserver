@@ -3,8 +3,9 @@ require "logger_api"
 -- class = require "middleclass"
 
 local serpent_lib = require "serpent"
+
 function serpent(value)
-  return serpent_lib.block(value)
+  return serpent_lib.line(value)
 end
 
 local inspect_lib = require "inspect"

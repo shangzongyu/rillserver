@@ -20,6 +20,7 @@ local function next_dbproxy()
     if next_id > MAX_DBPROXY_COUNT then
         next_id = 1
     end
+    ERROR(dbproxy[next_id])
     return dbproxy[next_id]
 end
 
@@ -38,7 +39,7 @@ function M.get_accountdata(account)
 end
 
 function M.get_accountdata_by_uid(uid)
-    local db = fetch_dbproxy()
+    local db = fetch_dbproxy(uid)
     return skynet.call(db, "lua", "dbproxy.get", "account", "account", {uid=uid})
 end
 
