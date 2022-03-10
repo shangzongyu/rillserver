@@ -8,6 +8,14 @@ app_root = "../"
 -- end
 
 local M = {}
+local t = {}
+
+function M:new()
+    t={}
+	setmetatable(t, {__index=self})
+	return t
+end
+
 
 local socket = require "client.socket"
 

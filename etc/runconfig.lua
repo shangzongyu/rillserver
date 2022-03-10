@@ -38,11 +38,11 @@ return {
       [1] = {node = "node1"},
       --[2] = {node = "node2"},
     },
-    --gateway服务
-    gateway_common = {maxclient = 10240, nodelay = true},
+    --gateway服务 maxclient 根据单个玩家内存来计算
+    gateway_common = {maxclient = 2000, nodelay = true},
     gateway = {
       [1] = {port = 11798,  node = "node1"},
-      [2] = {port = 11799,  node = "node2"},
+      --[2] = {port = 11799,  node = "node2"},
     },
     --global服务
     global = {

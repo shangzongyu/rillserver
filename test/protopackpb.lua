@@ -103,7 +103,7 @@ function M.pack(cmd, check, msg)
 		print(string.format("protopack_pb fail, cmd:%s", cmd or "nil"))
 		return
 	end
-	print("pack code:"..code)
+--	print("pack code:"..code)
 	--check
 	check = check or 0
 	--pbstr
@@ -114,12 +114,12 @@ function M.pack(cmd, check, msg)
 	--组成发送字符串
 	local f = string.format("> i2 i4 I4 c%d", pblen)
 	local str = string.pack(f, len, check, code, pbstr)
-	print("f:", f)
-	print("str:", str)
-	--??
-	print("send pbstr:"..bin2hex(pbstr))
-	print("send:"..bin2hex(str))
-	print(string.format("send:cmd(%s) check(%d) msg->%s", cmd, check, tool.dump(msg)))
+	-- print("f:", f)
+	-- print("str:", str)
+	-- --??
+	-- print("send pbstr:"..bin2hex(pbstr))
+	-- print("send:"..bin2hex(str))
+	-- print(string.format("send:cmd(%s) check(%d) msg->%s", cmd, check, tool.dump(msg)))
 	return str
 end
 
@@ -129,9 +129,9 @@ function M.unpack(str)
 	local check, code, pbstr = string.unpack(f, str)
 	local cmd = code2name[code]
 	local msg = pb.decode(cmd, pbstr)
-	print("recv:"..bin2hex(str))
-	print("recv pbstr:"..bin2hex(pbstr))
-	print(string.format("recv:cmd(%s) check(%d) msg->%s", cmd, check, tool.dump(msg)))
+	-- print("recv:"..bin2hex(str))
+	-- print("recv pbstr:"..bin2hex(pbstr))
+	-- print(string.format("recv:cmd(%s) check(%d) msg->%s", cmd, check, tool.dump(msg)))
 	return cmd, check, msg
 end
 

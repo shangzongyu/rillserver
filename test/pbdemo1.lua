@@ -1,7 +1,6 @@
 package.cpath = "../luaclib/?.so;"
 
-local client=require "tcpclient"
-
+local client = require "tcpclient"
 local Hander={}
 
 function login_login(msg)
@@ -39,6 +38,11 @@ function Hander.CallBack(cmd,check,msg)
 		_G[funcname](msg)
 	end
 end
-client.init(nil,nil,Hander)
-client.login("king","111111")
-client.start()
+
+for i = 1, 2000 do
+    client2 = client:new()
+	client2.init(nil,nil,Hander)
+	client2.login("robot"..i,"111111")
+	--client2.start()
+	os.execute("sleep " .. 0.05)
+end
