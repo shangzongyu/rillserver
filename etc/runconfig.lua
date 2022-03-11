@@ -52,7 +52,7 @@ return {
     --center服务
     center = {
       [1] = {node = "node1"},
-      --[2] = {node = "node1"},
+       --[2] = {node = "node1"},
     },
     --login服务
     login = {
