@@ -32,6 +32,7 @@ function gateserver.start(handler)
 	assert(handler.connect)
 
 	function CMD.open( source, conf )
+		ERROR(serpent(conf))
 		assert(not socket)
 		local address = conf.address or "0.0.0.0"
 		local port = assert(conf.port)

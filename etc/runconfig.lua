@@ -9,7 +9,7 @@ return {
     --node2 = "127.0.0.1:2529",
   },
   --通信协议
-  prototype = "tcp",  --tcp/ws
+  prototype = "kcp",  --tcp/ws/kcp
   protopack = "pb",   --pb/json
 
   --各个服务配置
