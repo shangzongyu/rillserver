@@ -75,6 +75,7 @@ local function handler(addr, fd)
         socket.close(fd)
         return
     end
+    q.body = body
     INFO(serpent(q))
     local ret = skynet.call(skynet:self(), "lua", q.cmd , addr, fd, q)
     ret = ret or "nil response"

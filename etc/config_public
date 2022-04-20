@@ -7,7 +7,7 @@ log_default_lv = 1
 thread = 8
 harbor = 0
 bootstrap = "snlua bootstrap"
-
+enablessl = true
 runconfig = "runconfig"
 
 lualoader	= skynet_root.."lualib/loader.lua"

@@ -1,5 +1,5 @@
 ###############################################################################
-# Copyright(C)   machine stdio                                                #
+# Copyright(C)   machine studio                                                #
 # Author:        donney                                                       #
 # Email:         donney_luck@sina.cn                                          #
 # Date:          2022-02-18                                                   #
