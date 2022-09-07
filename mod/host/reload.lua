@@ -29,7 +29,7 @@ function dispatch.host_mod(addr, fd , q)
         if cmd == service_name then
             log.debug("reload %s", cmd)
             local diff_time = skynet.call(k, "lua", "faci.reload", mod)
-            list[skynet.address(k)] = string.format("%.05fs (%s)", diff_time, v)
+            list[skynet.address(k)] = string.format("%.05f (%s)", diff_time, v)
         end
     end
     INFO("reload ok "..tool.dump(list))

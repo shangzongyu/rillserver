@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
--- Copyright(C)   machine studio                                              --
+-- Copyright(C)   machine studio                                             --
 -- Author:        donney                                                     --
 -- Email:         donney_luck@sina.cn                                        --
 -- Date:          2021-05-25                                                 --
@@ -211,6 +211,7 @@ skynet.start(function()
     start_center()
     start_host()
     start_gateway()
+
     --exit
     skynet.exit()
 end)

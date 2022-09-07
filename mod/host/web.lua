@@ -4,14 +4,14 @@ local httpd = require "http.httpd"
 local sockethelper = require "http.sockethelper"
 local urllib = require "http.url"
 local tool = require "tool"
-
 local faci = require "faci.module"
+local runconf = require(skynet.getenv("runconfig"))
+
 local module = faci.get_module("web")
 local dispatch = module.dispatch
 local forward = module.forward
 local event = module.event
 
-local runconf = require(skynet.getenv("runconfig"))
 local node = skynet.getenv("nodename")
 
 local default_page = [[

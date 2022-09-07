@@ -35,6 +35,7 @@ local function sandbox_require(mod)
     if not sandbox_mods[mod] then
         sandbox_mods[mod] = make_sandbox()
     end
+    DEBUG("require mod", mod, " ", inspect(sandbox_mods))
     return sandbox_mods[mod]
 end
 
@@ -50,6 +51,7 @@ sandbox.__index = function(t, k)
     else
         local sandbox_table = make_sandbox()
         rawset(t, k, sandbox_table)
+        DEBUG("key", k, inspect(sandbox_table))
         return sandbox_table
     end
 end
@@ -330,6 +332,7 @@ function reload.reload(mod)
     if not old_obj then
         return false, "mod not found"
     end
+
     local env = make_sandbox()
     local ret, func, new_obj = loadmod(mod, env)
     if not ret then
@@ -338,6 +341,7 @@ function reload.reload(mod)
 
     update_obj(old_obj, new_obj, "reload", "")
     for name, value in pairs(sandbox_mods) do
+        ERROR("udpate sandbox_mods ", name)
         local old_value = package.loaded[name]
         update_obj(old_value, value, name, "")
     end
