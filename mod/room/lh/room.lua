@@ -3,7 +3,6 @@
 --- Created by dongyf.
 --- DateTime: 2019-06-07 16:14
 ---
-
 local RoomLH = class("RoomLH")
 local skynet = require "skynet"
 local tablex = require "pl.tablex"
@@ -34,10 +33,10 @@ function RoomLH:initialize()
 end
 
 function RoomLH:broadcast(msg, filterUid)
-    for k,v in pairs(self.players) do
+    for k, v in pairs(self.players) do
         if not filterUid or filterUid ~= k then
-            --libcenter.send2client(k,msg)
-            skynet.send(v.agent, "lua", 'send2client',msg)
+            -- libcenter.send2client(k,msg)
+            skynet.send(v.agent, "lua", 'send2client', msg)
         end
     end
 end
@@ -47,10 +46,13 @@ function RoomLH:enter(data)
     local player = {
         uid = uid,
         agent = data.agent,
-        node = data.node,
+        node = data.node
     }
-    self.players[uid]=player
-    self:broadcast({_cmd = "room_move.add", uid=uid,}, uid)
+    self.players[uid] = player
+    self:broadcast({
+        _cmd = "room_move.add",
+        uid = uid
+    }, uid)
 
     return SYSTEM_ERROR.success
 end
@@ -61,7 +63,10 @@ function RoomLH:leave(uid)
         return SYSTEM_ERROR.error
     end
     self.players[uid] = nil
-    self:broadcast({_cmd = "movegame.leave", uid = uid}, uid)
+    self:broadcast({
+        _cmd = "movegame.leave",
+        uid = uid
+    }, uid)
 
     return SYSTEM_ERROR.success
 end

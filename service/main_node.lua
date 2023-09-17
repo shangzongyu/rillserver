@@ -6,7 +6,6 @@
 -- Description:   start function                                             --
 -- Modification:  null                                                       --
 -------------------------------------------------------------------------------
-
 local skynet = require "skynet"
 require "skynet.manager"
 
@@ -56,7 +55,7 @@ local nodename = skynet.getenv("nodename")
 -- behaviorTree:tick(nil, blackBoard)
 
 local function start_host()
-    for k,v in pairs(servconf.host_common) do
+    for k, v in pairs(servconf.host_common) do
         if nodename == v.node and v.name == "web" then
             skynet.uniqueservice(v.name, "host", v.port)
         end
@@ -64,7 +63,7 @@ local function start_host()
 end
 
 local function start_console()
-    for i,v in pairs(servconf.debug_console) do
+    for i, v in pairs(servconf.debug_console) do
         if nodename == v.node then
             skynet.uniqueservice("debug_console", v.port)
         end
@@ -88,19 +87,19 @@ local function start_gateway()
                 port = g.port,
                 maxclient = c.maxclient,
                 nodelay = c.nodelay,
-                name = name,
+                name = name
             })
             -- ERROR("=====start ", name, "port:", g.port, "...======")
-        -- else
-        --     local proxy = cluster.proxy(v.node, name)
-        --     skynet.name(name, proxy)
-       end
+            -- else
+            --     local proxy = cluster.proxy(v.node, name)
+            --     skynet.name(name, proxy)
+        end
     end
 end
 
 local function start_agentpool()
-    --开启agentpool服务
-  for i,v in pairs(servconf.agentpool) do
+    -- 开启agentpool服务
+    for i, v in pairs(servconf.agentpool) do
         local name = string.format("agentpool%d", i)
         if nodename == v.node then
             local c = servconf.agentpool_common
@@ -113,7 +112,7 @@ local function start_agentpool()
                 agentname = agentname,
                 maxnum = c.maxnum,
                 recyremove = c.recyremove,
-                brokecachelen = c.brokecachelen,
+                brokecachelen = c.brokecachelen
             })
         else
             local proxy = cluster.proxy(v.node, name)
@@ -123,8 +122,8 @@ local function start_agentpool()
 end
 
 local function start_roompool()
-    --开启agentpool服务
-    for i,v in pairs(servconf.roompool) do
+    -- 开启agentpool服务
+    for i, v in pairs(servconf.roompool) do
         local name = string.format("roompool%d", i)
         if nodename == v.node then
             local c = servconf.roompool_common
@@ -137,7 +136,7 @@ local function start_roompool()
                 roomname = roomname,
                 maxnum = c.maxnum,
                 recyremove = c.recyremove,
-                brokecachelen = c.brokecachelen,
+                brokecachelen = c.brokecachelen
             })
         else
             local proxy = cluster.proxy(v.node, name)
@@ -147,7 +146,7 @@ local function start_roompool()
 end
 
 local function start_login()
-    for i,v in pairs(servconf.login) do
+    for i, v in pairs(servconf.login) do
         local name = string.format("login%d", i)
         if nodename == v.node then
             local p = skynet.newservice("login", "login", i)
@@ -159,19 +158,19 @@ local function start_login()
 end
 
 local function start_dbproxy()
-    for i,v in pairs(servconf.dbproxy) do
+    for i, v in pairs(servconf.dbproxy) do
         local name = string.format("dbproxy%d", i)
         if nodename == v.node then
             local p = skynet.newservice("dbproxy", "dbproxy", i)
-        -- else
-        --     local proxy = cluster.proxy(v.node, name)
-        --     skynet.name(name, proxy)
+            -- else
+            --     local proxy = cluster.proxy(v.node, name)
+            --     skynet.name(name, proxy)
         end
     end
 end
 
 local function start_center()
-    for i,v in pairs(servconf.center) do
+    for i, v in pairs(servconf.center) do
         local name = string.format("center%d", i)
         if nodename == v.node then
             local p = skynet.newservice("center", "center", i)
@@ -183,7 +182,7 @@ local function start_center()
 end
 
 local function start_global()
-    for i,v in pairs(servconf.global) do
+    for i, v in pairs(servconf.global) do
         local name = string.format("global%d", i)
         if nodename == v.node then
             local p = skynet.newservice("global", "global", i)
@@ -194,13 +193,12 @@ local function start_global()
     end
 end
 
-
 skynet.start(function()
     INFO("Server start version: " .. runconf.version)
-    --集群信息
+    -- 集群信息
     cluster.reload(runconf.cluster)
     cluster.open(nodename)
-    --开启各个服务
+    -- 开启各个服务
     start_roompool()
     start_agentpool()
     start_console()
@@ -212,6 +210,6 @@ skynet.start(function()
     start_host()
     start_gateway()
 
-    --exit
+    -- exit
     skynet.exit()
 end)

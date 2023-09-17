@@ -42,7 +42,7 @@ function choose_server() {
     printf "             Server List\n"
     for ((i=0; i<$server_list_len; i=i+1)); do
         printf "%-10d %-20s %-20s  %-20s %-20s\n" $i ${SERVER_LIST[$(($i*$coloum))]} \
-            ${SERVER_LIST[$(($i*$coloum+1))]} ${SERVER_LIST[$(($i*$coloum+2))]} ${SERVER_LIST[$(($i*$coloum+3))]} 
+            ${SERVER_LIST[$(($i*$coloum+1))]} ${SERVER_LIST[$(($i*$coloum+2))]} ${SERVER_LIST[$(($i*$coloum+3))]}
     done
     printf "========================================\n"
     printf "             Server List\n"
@@ -71,9 +71,9 @@ function insure(){
 
 function upload(){
     scp $FILE_PATH $USER@$HOST:$WORK_DIR
-    
+
     #先上传解压，然后用root用户安装依赖
-    ssh $USER@$HOST "cd $WORK_DIR 
+    ssh $USER@$HOST "cd $WORK_DIR
         tar xvf $FILE_NAME"
 
     #我们需要安装一些依赖库，所以先用root用户安装

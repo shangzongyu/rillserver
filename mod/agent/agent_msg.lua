@@ -16,5 +16,5 @@ end
 
 function service.logout(account)
     agent_info:stop_save_agent_info_timer()
-    --是否要 取消 定时保存操作？
+    -- 是否要 取消 定时保存操作？
 end

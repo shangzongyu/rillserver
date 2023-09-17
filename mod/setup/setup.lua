@@ -10,13 +10,11 @@ local dispatch = module.dispatch
 local forward = module.forward
 local event = module.event
 
-
 local function update()
-    skynet.timeout(100,
-        function()
-            D.update_all()
-            update()
-        end )
+    skynet.timeout(100, function()
+        D.update_all()
+        update()
+    end)
 end
 
 local function dir(path)
@@ -39,7 +37,6 @@ local function init()
         builder.new(v, conf)
     end
 end
-
 
 function dispatch.update_all()
     list = dir("config")

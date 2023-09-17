@@ -2,7 +2,7 @@ local skynet = require "skynet"
 
 local function init()
 
-	--return skynet.call(".launcher", "lua", "LIST")
+    -- return skynet.call(".launcher", "lua", "LIST")
     local addr = skynet.queryservice("testd")
 
     print("==== 8888 1000 === p: " .. addr)
@@ -15,5 +15,5 @@ local function init()
 end
 
 skynet.start(function()
-    init() 
+    init()
 end)

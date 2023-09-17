@@ -10,8 +10,8 @@
 #!/bin/bash
 #FILES=`ls *.proto`
 #use fd better
-FILES=`fd -e proto`
+FILES=$(fd -e proto)
 for file in ${FILES[*]}; do
-    echo "export protofile:" $file
-    protoc -o ${file%.proto}.pb $file
+  echo "export protofile:" $file
+  protoc -o ${file%.proto}.pb $file
 done

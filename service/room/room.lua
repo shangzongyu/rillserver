@@ -6,7 +6,6 @@
 -- Description:   service room                                               --
 -- Modification:  null                                                       --
 -------------------------------------------------------------------------------
-
 require("base.init")
 
 local name, id = ...

@@ -33,7 +33,7 @@ local default_page = [[
     <a href="/?cmd=reload.mod">reload mod</a>
 ]]
 
---http://123.207.111.118:8111/?cmd=web.test
+-- http://123.207.111.118:8111/?cmd=web.test
 function dispatch.test()
     return "good man fuck you hotfix"
 end
@@ -56,7 +56,7 @@ local function handler(addr, fd)
         return
     end
 
-    if code ~= 200 then  -- 服务器成功返回网页
+    if code ~= 200 then -- 服务器成功返回网页
         response(fd, code)
         socket.close(fd)
         return
@@ -77,7 +77,7 @@ local function handler(addr, fd)
     end
     q.body = body
     INFO(serpent(q))
-    local ret = skynet.call(skynet:self(), "lua", q.cmd , addr, fd, q)
+    local ret = skynet.call(skynet:self(), "lua", q.cmd, addr, fd, q)
     ret = ret or "nil response"
     response(fd, code, ret)
     socket.close(fd)
@@ -92,7 +92,7 @@ function event.start()
     local listenfd = socket.listen("0.0.0.0", cfg.port)
     INFO("Listen web port:", cfg.port)
 
-    socket.start(listenfd , function(fd, addr)
+    socket.start(listenfd, function(fd, addr)
         log.info("connected %s%d", addr, fd)
         skynet.fork(handler, addr, fd)
     end)

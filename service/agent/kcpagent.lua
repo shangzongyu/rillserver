@@ -12,19 +12,15 @@ local env = require "faci.env"
 
 require "agent.agent_init"
 
-
-
 local CMD = {}
 
 local gate
 local fd
 local account
 
-
 local default_dispatch
 local service_dispatch
 local dispatch
-
 
 function default_dispatch(cmd, msg)
     local cb = env.dispatch[cmd]
@@ -73,11 +69,11 @@ function dispatch(_, _, str)
     end
 end
 
-skynet.register_protocol{
+skynet.register_protocol {
     name = "client",
     id = skynet.PTYPE_CLIENT,
     unpack = skynet.tostring,
-    dispatch = dispatch,
+    dispatch = dispatch
 }
 
 function CMD.start(conf)
@@ -89,14 +85,14 @@ function CMD.start(conf)
 end
 
 function CMD.disconnect()
-    DEBUG("-------agent disconnect exit uid("..account.uid..")------")
+    DEBUG("-------agent disconnect exit uid(" .. account.uid .. ")------")
     env.logout(account)
     return true
 end
 
 function CMD.kick()
-    DEBUG("-------agent kick exit uid("..account.uid..")------")
-    local kick=env.dispatch["kick_room"]
+    DEBUG("-------agent kick exit uid(" .. account.uid .. ")------")
+    local kick = env.dispatch["kick_room"]
     kick()
     env.logout(account)
     return true
@@ -112,10 +108,9 @@ function CMD.send2client(msg)
     libsocket.send(fd, data)
 end
 
-
 skynet.start(function()
     -- If you want to fork a work thread , you MUST do it in CMD.login
-    skynet.dispatch("lua",function(_, _, cmd, ...)
+    skynet.dispatch("lua", function(_, _, cmd, ...)
         local f = assert(CMD[cmd], cmd)
         skynet.retpack(cs(f, ...))
     end)

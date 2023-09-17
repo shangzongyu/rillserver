@@ -3,23 +3,22 @@ local log = require "log"
 
 local CMD = {}
 
-local pool = {}	 -- the least agent
+local pool = {} -- the least agent
 local roomlist = {} -- all of agent, include dispatched
 local roomname = nil
 local maxnum = nil
 local recyremove = nil
 local brokecachelen = nil
 
-
 local name, id = ...
-log.set_name(name..id)
+log.set_name(name .. id)
 local roomIdx = 1
 
 local function selectRoomIdx()
     local has = false
     while true do
         for k, v in pairs(roomlist) do
-            --DEBUG("roomIdx: ", roomIdx, "  id: ", v.id)
+            -- DEBUG("roomIdx: ", roomIdx, "  id: ", v.id)
             if roomIdx == v.id then
                 has = true
                 roomIdx = roomIdx + 1
@@ -33,6 +32,8 @@ local function selectRoomIdx()
     end
 end
 
+ROOM_MAX_IDS = 99999999999
+
 function CMD.init_pool(cnf)
     roomname = cnf.roomname
     maxnum = cnf.maxnum
@@ -40,13 +41,13 @@ function CMD.init_pool(cnf)
     brokecachelen = cnf.brokecachelen
     for i = 1, maxnum do
         selectRoomIdx()
-        --DEBUG("roomIdx: ", roomIdx)
+        -- DEBUG("roomIdx: ", roomIdx)
         local idx = roomIdx
         roomIdx = roomIdx + 1
         local room = skynet.newservice(roomname, "room", idx)
         table.insert(pool, room)
         local isReset = false
-        if roomIdx == 99999999999 then
+        if roomIdx == ROOM_MAX_IDS then
             roomIdx = 1
             isReset = true
         end
@@ -55,7 +56,7 @@ function CMD.init_pool(cnf)
             id = roomIdx - 1
         }
         if isReset then
-            roomlist[room].id = 99999999999 - 1
+            roomlist[room].id = ROOM_MAX_IDS - 1
         end
     end
 end
@@ -68,7 +69,7 @@ function CMD.get()
         roomIdx = roomIdx + 1
         room = assert(skynet.newservice(roomname, "room", idx))
         local isReset = false
-        if roomIdx == 99999999999 then
+        if roomIdx == ROOM_MAX_IDS then
             roomIdx = 1
             isReset = true
         end
@@ -77,7 +78,7 @@ function CMD.get()
             id = roomIdx - 1
         }
         if isReset then
-            roomlist[room].id = 99999999999 - 1
+            roomlist[room].id = ROOM_MAX_IDS - 1
         end
     end
 
@@ -96,7 +97,7 @@ function CMD.recycle(room)
 end
 
 skynet.start(function()
-    skynet.dispatch("lua", function (_, address, cmd, ...)
+    skynet.dispatch("lua", function(_, address, cmd, ...)
         local f = assert(CMD[cmd])
         skynet.ret(skynet.pack(f(...)))
     end)

@@ -8,14 +8,14 @@ local data = require('data.roomData')
 local libroompool = require("libroompool")
 
 local faci = require "faci.module"
-local env = require'faci.env'
+local env = require 'faci.env'
 local module = faci.get_module("roomManager")
 local dispatch = module.dispatch
 
 local roomManagerLogic = {}
 
 function roomManagerLogic.init()
-    --创建mode为2的房间
+    -- 创建mode为2的房间
     local roomData = data.roomData
     for id, roomInfo in pairs(roomData) do
         if roomInfo.roomMode == 2 and env.id == 1 then
@@ -24,9 +24,9 @@ function roomManagerLogic.init()
     end
 end
 
-function roomManagerLogic.get_one_room (roomService, roomName, roomId)
+function roomManagerLogic.get_one_room(roomService, roomName, roomId)
     return libroompool.get()
-    --return skynet.newservice(roomService, "room", roomId)
+    -- return skynet.newservice(roomService, "room", roomId)
 end
 
 function roomManagerLogic.recycle(room)

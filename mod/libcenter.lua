@@ -4,7 +4,6 @@ local runconf = require(skynet.getenv("runconfig"))
 local servconf = runconf.service
 local MAX_CENTER_COUNT = #servconf.center
 
-
 local M = {}
 local centers = {}
 
@@ -43,19 +42,19 @@ end
 
 function M.send2client(uid, msg)
     local center = M.fetch_centerd(uid)
-	skynet.call(center, "lua", "broadcast.send2client", uid, msg)
+    skynet.call(center, "lua", "broadcast.send2client", uid, msg)
 end
 
 function M.send2clientcmd(uid, cmd)
-	local msg={}
-	msg._cmd=cmd
-	msg._check=0
+    local msg = {}
+    msg._cmd = cmd
+    msg._check = 0
     local center = M.fetch_centerd(uid)
-	skynet.call(center, "lua", "broadcast.send2client", uid, msg)
+    skynet.call(center, "lua", "broadcast.send2client", uid, msg)
 end
 
 function M.broadcast2client(msg)
-	M.broadcast("broadcast.broadcast2client", msg)
+    M.broadcast("broadcast.broadcast2client", msg)
 end
 
 function M.watch(acm)
@@ -65,8 +64,5 @@ end
 
 skynet.init(init)
 
-
-
 return M
-
 

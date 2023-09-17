@@ -6,7 +6,6 @@
 -- Description:   ddz room                                                   --
 -- Modification:  null                                                       --
 -------------------------------------------------------------------------------
-
 local RoomDDZ = class("RoomDDZ")
 local tablex = require "pl.tablex"
 local libcenter = require "libcenter"
@@ -29,10 +28,10 @@ function RoomDDZ:initialize()
 end
 
 function RoomDDZ:broadcast(msg, filterUid)
-    --DEBUG("broadcast")
-    for k,v in pairs(self._players) do
+    -- DEBUG("broadcast")
+    for k, v in pairs(self._players) do
         if not filterUid or filterUid ~= k then
-            libcenter.send2client(k,msg)
+            libcenter.send2client(k, msg)
         end
     end
 end
@@ -42,20 +41,23 @@ local idx
 
 function RoomDDZ:enter(data)
     local uid = data.uid
-    local player={
-        uid=uid,
-        agent=data.agent,
-        node=data.node,
+    local player = {
+        uid = uid,
+        agent = data.agent,
+        node = data.node
     }
-    self._players[uid]=player
-    self:broadcast({_cmd = "room_move.add", uid=uid,}, uid)
+    self._players[uid] = player
+    self:broadcast({
+        _cmd = "room_move.add",
+        uid = uid
+    }, uid)
 
-    --if self:is_player_num_overload() then
+    -- if self:is_player_num_overload() then
     --	t=timer:new()
     --	t:init()
     --	idx=t:register(3,self.gamestart,0,self)
     --	DEBUG("room player is overload")
-    --end
+    -- end
 
     return SYSTEM_ERROR.success
 end
@@ -65,14 +67,17 @@ function RoomDDZ:leave(uid)
         ERROR("RoomDDZ leave uid is nil")
         return SYSTEM_ERROR.error
     end
-    self._players[uid]=nil
-    self:broadcast({_cmd = "movegame.leave", uid = uid}, uid)
-    --DEBUG(t)
-    --DEBUG(idx)
-    --if t and idx then
+    self._players[uid] = nil
+    self:broadcast({
+        _cmd = "movegame.leave",
+        uid = uid
+    }, uid)
+    -- DEBUG(t)
+    -- DEBUG(idx)
+    -- if t and idx then
     --    t:unregister(idx)
     --    DEBUG("unregister:"..idx)
-    --end
+    -- end
     return SYSTEM_ERROR.success
 end
 

@@ -3,7 +3,6 @@
 --- Created by dongyf.
 --- DateTime: 2019-06-07 16:54
 ---
-
 local timer = require('timer')
 local rule = require('room.lh.gameRule')
 local Date = require('pl.Date')
@@ -43,14 +42,30 @@ function logic:init()
     self.timer:init(1 * 100)
     self.timer:register(1, self.onCall.onLoop, false, self)
 
-    self:regExpire(LH_ACTION.EMPTY, function() self:emptyExpire() end)
-    self:regExpire(LH_ACTION.SHUFFLE, function() self:shuffleExpire() end)
-    self:regExpire(LH_ACTION.READY, function() self:readyExpire() end)
-    self:regExpire(LH_ACTION.HOLE, function() self:holeExpire() end)
-    self:regExpire(LH_ACTION.BET, function() self:betExpire() end)
-    self:regExpire(LH_ACTION.OPEN, function() self:openExpire() end)
-    self:regExpire(LH_ACTION.BONUS, function() self:bonusExpire() end)
-    self:regExpire(LH_ACTION.STOP, function() self:bonusExpire() end)
+    self:regExpire(LH_ACTION.EMPTY, function()
+        self:emptyExpire()
+    end)
+    self:regExpire(LH_ACTION.SHUFFLE, function()
+        self:shuffleExpire()
+    end)
+    self:regExpire(LH_ACTION.READY, function()
+        self:readyExpire()
+    end)
+    self:regExpire(LH_ACTION.HOLE, function()
+        self:holeExpire()
+    end)
+    self:regExpire(LH_ACTION.BET, function()
+        self:betExpire()
+    end)
+    self:regExpire(LH_ACTION.OPEN, function()
+        self:openExpire()
+    end)
+    self:regExpire(LH_ACTION.BONUS, function()
+        self:bonusExpire()
+    end)
+    self:regExpire(LH_ACTION.STOP, function()
+        self:bonusExpire()
+    end)
 end
 
 function logic:start(room)
@@ -65,23 +80,31 @@ function logic:setStatus(status)
     self.statusExpired = LH_COUNTDOWN[status]
     self.status = status
     DEBUG(string.format("更换状态%s  时间%s", tostring(LH_ACTION_STR[status]), tostring(LH_COUNTDOWN[status])))
-    self.room:broadcast({_cmd = "room_status.changge", status = tostring(LH_ACTION_STR[status]), count = self.statusExpired})
-    --self:updateBonusInfo({action = status, gamesn = self.gamesn, time = RealTime(), countdown = LH_COUNTDOWN[status]})
+    self.room:broadcast({
+        _cmd = "room_status.changge",
+        status = tostring(LH_ACTION_STR[status]),
+        count = self.statusExpired
+    })
+    -- self:updateBonusInfo({action = status, gamesn = self.gamesn, time = RealTime(), countdown = LH_COUNTDOWN[status]})
 end
 
 function logic:checkTime()
-    --DEBUG("logic:checkTime")
+    -- DEBUG("logic:checkTime")
     if 0 < self.statusExpired and self.statusExpired < MAX_EXPIRED_TIME then
         self.statusExpired = self.statusExpired - 1
     end
-    self.room:broadcast({_cmd = "room_status.count", status = tostring(LH_ACTION_STR[self.status]), count = self.statusExpired})
+    self.room:broadcast({
+        _cmd = "room_status.count",
+        status = tostring(LH_ACTION_STR[self.status]),
+        count = self.statusExpired
+    })
 end
 
 function logic:logic()
     if self.statusExpired <= 0 and self.isPlaying then
         self:onStatusExpire(self.status)
     end
-    DEBUG("self.statusExpired : ", self.statusExpired , ' isPlaying: ', (self.isPlaying and "true" or 'false'))
+    DEBUG("self.statusExpired : ", self.statusExpired, ' isPlaying: ', (self.isPlaying and "true" or 'false'))
 end
 
 function logic:onStatusExpire(status)
@@ -92,7 +115,7 @@ function logic:onStatusExpire(status)
 end
 
 function logic:updateRoom()
-    --DEBUG("logic:updateRoom")
+    -- DEBUG("logic:updateRoom")
     -- 暂停功能
     if self.isPause then
         return
@@ -161,10 +184,10 @@ end
 
 function logic:readyStatus()
     self.round = self.round + 1
-    --self.gamesn = Gox.redis:incr('gamesn')
+    -- self.gamesn = Gox.redis:incr('gamesn')
     -- 牌局编号
-    --self:setGameNo()
-    --self:setRoomData(self.roomType)
+    -- self:setGameNo()
+    -- self:setRoomData(self.roomType)
     self:setStatus(LH_ACTION.READY)
     self.card1 = 0
     self.card2 = 0
@@ -172,7 +195,7 @@ function logic:readyStatus()
 
     -- 获取matchType
     self.aiActions = {}
-    --self.matchType = self:getMatchType()
+    -- self.matchType = self:getMatchType()
     -- if utils.roomType(self.sn) == 9002 then
     -- 	self.matchType = utils.MATCHTYPE.KILL
     -- elseif utils.roomType(self.sn) == 9003 then
@@ -184,16 +207,16 @@ function logic:readyStatus()
         gamesn = self.gamesn,
         room = self.roomType,
         tableId = self.sn,
-        att = {},	--玩家信息
-        pub1 = 0,	--旧平台牌型
+        att = {}, -- 玩家信息
+        pub1 = 0, -- 旧平台牌型
         info = {},
-        td = 0,	--结束时间
-        roomType = self.matchType, -- 房间类型
+        td = 0, -- 结束时间
+        roomType = self.matchType -- 房间类型
     }
     -- 牌数
     self.dealNum = self.cards:getDealNum() + self.dealNoNum
     self.cardNum = self.maxNum - self.cards:getDealNum()
-    --self:checkRobotStatus()
+    -- self:checkRobotStatus()
 end
 
 function logic:restartGame()
@@ -236,10 +259,9 @@ function logic:bonusExpire()
     self:setStatus(LH_ACTION.EMPTY)
 end
 
-
 function logic:onBet(uid, info)
     local amount = info.amount
-    DEBUG('logic:onBet, uid: ',uid, ' 下注: ', amount)
+    DEBUG('logic:onBet, uid: ', uid, ' 下注: ', amount)
     return true
 end
 

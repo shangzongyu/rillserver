@@ -14,9 +14,9 @@ local db = {
     ["account"] = nil,
     ["game"] = nil,
     ["global"] = nil,
-    ["log"] = nil,
-  --  ["redis"] = nil,
-  --  ["mysql"] = nil
+    ["log"] = nil
+    --  ["redis"] = nil,
+    --  ["mysql"] = nil
 }
 
 local function init_db(conf)
@@ -36,12 +36,12 @@ function event.awake()
     assert(db.log)
     -- db.redis = init_db(dbconf.redisdb)
     -- assert(db.redis)
-   -- db.mysql = init_db(dbconf.mysqldb)
-   -- assert(db.mysql)
+    -- db.mysql = init_db(dbconf.mysqldb)
+    -- assert(db.mysql)
 end
 
 -- mongodb api
-function dispatch.get(dbname, cname, select)  --cname -> collection name
+function dispatch.get(dbname, cname, select) -- cname -> collection name
     return db[dbname]:findOne(cname, select)
 end
 
@@ -62,11 +62,14 @@ function dispatch.r_get(dbname, key)
     db[dbname]:get(key, value)
 end
 
-
---发号器
+-- 发号器
 local t_max_uuid = {
-    ["account"] = { uuid = 50000},  --角色唯一ID
-    ["roomid"] = { uuid = 50000}, --房间唯一ID
+    ["account"] = {
+        uuid = 50000
+    }, -- 角色唯一ID
+    ["roomid"] = {
+        uuid = 50000
+    } -- 房间唯一ID
 }
 
 local function rand_inc_num()
@@ -75,7 +78,9 @@ end
 
 function event.start()
     for k, v in pairs(t_max_uuid) do
-        local ret = db["global"]:findOne("tb_key", {key_name=k})
+        local ret = db["global"]:findOne("tb_key", {
+            key_name = k
+        })
         if ret then
             v.uuid = tonumber(ret.uuid)
         end
@@ -85,19 +90,29 @@ end
 
 function event.exit()
     for k, v in pairs(t_max_uuid) do
-        db["global"]:update("tb_key", {key_name=k}, {key_name=k, uuid=tonumber(v.uuid)}, true)
+        db["global"]:update("tb_key", {
+            key_name = k
+        }, {
+            key_name = k,
+            uuid = tonumber(v.uuid)
+        }, true)
     end
 end
 
---原来方案有数据竞争问题，协程中调用数据库，协程会被挂起
---中途会执行其他协程
+-- 原来方案有数据竞争问题，协程中调用数据库，协程会被挂起
+-- 中途会执行其他协程
 function dispatch.incr(cname)
     local cuu = t_max_uuid[cname]
     assert(cuu)
 
     cuu.uuid = cuu.uuid + rand_inc_num()
     local uuid = cuu.uuid
-    --这一行存储只是防止停服，也会有竞争问题
-    db["global"]:update("tb_key", {key_name=cname}, {key_name=cname, uuid= cuu.uuid }, true)
+    -- 这一行存储只是防止停服，也会有竞争问题
+    db["global"]:update("tb_key", {
+        key_name = cname
+    }, {
+        key_name = cname,
+        uuid = cuu.uuid
+    }, true)
     return uuid
 end

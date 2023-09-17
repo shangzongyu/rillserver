@@ -5,7 +5,7 @@ local loghandle = print
 
 local MAX_LINE_COUNT = 100000
 
-local filename 
+local filename
 local fd
 local curlinecount = 0
 
@@ -18,7 +18,7 @@ local function fileloghandle(msg)
     fd:write('\n')
     fd:flush()
 
-    curlinecount = curlinecount + 1 
+    curlinecount = curlinecount + 1
     if curlinecount >= MAX_LINE_COUNT then
         io.close(fd)
 
@@ -27,7 +27,7 @@ local function fileloghandle(msg)
         local ret, err = os.rename(filename, rename)
         if not ret then
             skynet.error(string.format("rename %s fail, result: %s", rename, err))
-        end 
+        end
 
         fd = io.open(filename, "a+")
         assert(fd ~= nil)
@@ -36,7 +36,7 @@ local function fileloghandle(msg)
 end
 
 local function init()
-    filename = skynet.getenv("logfilename") 
+    filename = skynet.getenv("logfilename")
     if filename then
         loghandle = fileloghandle
     end
@@ -54,27 +54,28 @@ local function log(address, msg)
 end
 
 skynet.register_protocol {
-	name = "text",
-	id = skynet.PTYPE_TEXT,
-	unpack = skynet.tostring,
-	dispatch = function(_, address, msg)
+    name = "text",
+    id = skynet.PTYPE_TEXT,
+    unpack = skynet.tostring,
+    dispatch = function(_, address, msg)
         log(address, msg)
-	end
+    end
 }
 
 skynet.register_protocol {
-	name = "SYSTEM",
-	id = skynet.PTYPE_SYSTEM,
-	unpack = function(...) return ... end,
-	dispatch = function()
-		-- reopen signal
-		print("SIGHUP")
-	end
+    name = "SYSTEM",
+    id = skynet.PTYPE_SYSTEM,
+    unpack = function(...)
+        return ...
+    end,
+    dispatch = function()
+        -- reopen signal
+        print("SIGHUP")
+    end
 }
 
 skynet.start(function()
     init()
-	skynet.register ".logger"
+    skynet.register ".logger"
 end)
-
 

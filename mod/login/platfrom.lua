@@ -5,9 +5,9 @@ M.uc = {
     cpId = 30394,
     gameId = 739808,
     apiKey = "800f0f03bd9af651c871eb0ec3f43109",
-    --auth_path = "sdk.test4.9game.cn",
+    -- auth_path = "sdk.test4.9game.cn",
     auth_path = "sdk.9game.cn",
-    auth_url = "/cp/account.verifySession",
+    auth_url = "/cp/account.verifySession"
 }
 
 M.guopan = {

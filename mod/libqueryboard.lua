@@ -15,10 +15,9 @@ local function fetch_global()
 end
 
 function M.query(msg)
-	local global = fetch_global()
-	assert(global)
-	return skynet.call(global, "lua", "queryboard.query", msg.uid)
+    local global = fetch_global()
+    assert(global)
+    return skynet.call(global, "lua", "queryboard.query", msg.uid)
 end
-
 
 return M

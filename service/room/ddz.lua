@@ -3,7 +3,6 @@
 --- Created by dongyf.
 --- DateTime: 2019-06-03 00:33
 ---
-
 local name, id, path = ...
 local s = require "faci.service"
 s.init(name, id, path)

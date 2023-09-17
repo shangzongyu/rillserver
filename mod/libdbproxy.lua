@@ -34,37 +34,51 @@ end
 
 function M.get_accountdata(account)
     local db = fetch_dbproxy(account)
-    return skynet.call(db, "lua", "dbproxy.get", "account", "account", {account=account})
+    return skynet.call(db, "lua", "dbproxy.get", "account", "account", {
+        account = account
+    })
 end
 
 function M.get_accountdata_by_uid(uid)
     local db = fetch_dbproxy(uid)
-    return skynet.call(db, "lua", "dbproxy.get", "account", "account", {uid=uid})
+    return skynet.call(db, "lua", "dbproxy.get", "account", "account", {
+        uid = uid
+    })
 end
 
 function M.set_accountdata(account, update)
     local db = fetch_dbproxy(uid)
-    return skynet.call(db, "lua", "dbproxy.set", "account", "account", {account=account}, update)
+    return skynet.call(db, "lua", "dbproxy.set", "account", "account", {
+        account = account
+    }, update)
 end
 
 function M.get_playerdata(cname, uid)
     local db = fetch_dbproxy(uid)
-    return skynet.call(db, "lua", "dbproxy.get", "game", cname, {uid=uid})
+    return skynet.call(db, "lua", "dbproxy.get", "game", cname, {
+        uid = uid
+    })
 end
 
 function M.set_playerdata(cname, uid, update)
     local db = fetch_dbproxy(uid)
-    return skynet.call(db, "lua", "dbproxy.set", "game", cname, {uid=uid}, update)
+    return skynet.call(db, "lua", "dbproxy.set", "game", cname, {
+        uid = uid
+    }, update)
 end
 
 function M.get_globaldata(cname, key)
     local db = fetch_dbproxy(uid)
-    return skynet.call(db, "lua", "dbproxy.get", "global", cname, {name=key})
+    return skynet.call(db, "lua", "dbproxy.get", "global", cname, {
+        name = key
+    })
 end
 
 function M.set_globaldata(cname, key, update)
     local db = fetch_dbproxy(uid)
-    return skynet.call(db, "lua", "dbproxy.set", "global", cname, {name=key}, update)
+    return skynet.call(db, "lua", "dbproxy.set", "global", cname, {
+        name = key
+    }, update)
 end
 
 function M.add_dblog(cname, data)
@@ -84,7 +98,6 @@ end
 function M.inc_room()
     return inc_uid_cname("roomid")
 end
-
 
 skynet.init(init)
 

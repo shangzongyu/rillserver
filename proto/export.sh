@@ -9,7 +9,7 @@
 
 #!/bin/bash
 #FILES=`ls *.proto`
-#use fd better
+# use fd better, must install fd
 FILES=`fd -e proto`
 for file in ${FILES[*]}; do
     echo "export protofile:" $file

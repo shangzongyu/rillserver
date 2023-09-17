@@ -6,27 +6,26 @@
 -- Description:   agent info (player data)                                   --
 -- Modification:  null                                                       --
 -------------------------------------------------------------------------------
-
-local hash   = require "hash"
+local hash = require "hash"
 local env = require "faci.env"
 local skynet = require "skynet"
-local json      = require "cjson"
+local json = require "cjson"
 local libdbproxy = require "libdbproxy"
 local runconf = require(skynet.getenv("runconfig"))
 
 -- 玩家数据
 local playerdata = {
-    baseinfo = {}, --基本信息
-    bag = {}, --背包
-    task = {}, --任务
-    friend = {}, --好友
-    mail = {}, --邮件
-    achieve = {}, --成就
-    title = {}, --称号
+    baseinfo = {}, -- 基本信息
+    bag = {}, -- 背包
+    task = {}, -- 任务
+    friend = {}, -- 好友
+    mail = {}, -- 邮件
+    achieve = {}, -- 成就
+    title = {} -- 称号
 }
 
 local agent_info = {
-    base_info ={
+    base_info = {
         uid = 0,
         uid_str = "",
         platform_id = 0,
@@ -34,16 +33,14 @@ local agent_info = {
         sex = -1,
         token = "",
         gold = 0,
-        account = "",
+        account = ""
     },
     ext_info = {
         nick_name = "",
         sdk = -1,
-        addr = 0,
+        addr = 0
     },
-    other_info = {
-
-    }
+    other_info = {}
 }
 
 function agent_info:init_agent(uid, platform_id, sex, token, gold, account, addr)
@@ -72,7 +69,7 @@ local InitPlayerCMD = {}
 function InitPlayerCMD.init_baseinfo_data()
     local ret = {}
     local now = os.time()
-    local data_time = os.date("%Y-%m-%d %H:%M:%S",now)
+    local data_time = os.date("%Y-%m-%d %H:%M:%S", now)
     ret.login_time = data_time
     ret.register_time = data_time
     return ret
@@ -89,7 +86,10 @@ end
     baseinfo = {data = {}, hashcode = 0}
 ]]
 local function load_info(cname, uid)
-    local ret = {data=nil, hashcode=nil}
+    local ret = {
+        data = nil,
+        hashcode = nil
+    }
 
     ret.data = libdbproxy.get_playerdata(cname, uid)
     ret.data = ret.data or get_init_data(cname)
@@ -106,15 +106,15 @@ end
 local function load_account_info(cname, uid)
     local data = libdbproxy.get_accountdata_by_uid(uid)
     assert(data)
-    --for k, v in pairs(data) do
+    -- for k, v in pairs(data) do
     --    DEBUG("---------->   k: ", k, ' v: ', v)
-    --end
+    -- end
     return data
 end
 
 function agent_info:load_agent_info()
     local data = load_account_info('account', self.base_info.uid)
-    --更新账户信息
+    -- 更新账户信息
     self.base_info.platform_id = data.platform_id
     self.base_info.sex = data.sex
     self.base_info.gold = data.gold
@@ -130,7 +130,7 @@ function agent_info:update_agent_info()
     self.other_info.baseinfo.data.login_time = data_time
 end
 
-local function delay_load_update ()
+local function delay_load_update()
     agent_info:load_agent_info()
     agent_info:update_agent_info()
 
@@ -140,13 +140,12 @@ function agent_info:load_and_update_agent_info_delay(delay)
     skynet.timeout(delay, delay_load_update)
 end
 
-
 local function save_agent_info(agent_info)
     for k, v in pairs(agent_info.other_info) do
         local now_code = hash.hashcode(v.data or {})
-        if not v.hashcode or  v.hashcode ~= now_code then --第一次登陆保存一次
+        if not v.hashcode or v.hashcode ~= now_code then -- 第一次登陆保存一次
             v.hashcode = now_code
-            --skynet.error('login_time: ', v.data.login_time)
+            -- skynet.error('login_time: ', v.data.login_time)
             libdbproxy.set_playerdata(k, agent_info.base_info.uid, v.data)
         end
     end
@@ -174,14 +173,12 @@ function agent_info:stop_save_agent_info_timer()
     save_agent_info(self)
 end
 
-
 function env.get_agent()
     local agent = {
         base_info = agent_info.base_info,
-        ext_info = agent_info.ext_info,
+        ext_info = agent_info.ext_info
     }
     return agent
 end
-
 
 return agent_info

@@ -8,40 +8,40 @@ local forward = module.forward
 local event = module.event
 
 env.users = env.users or {}
---users[uid]={
-    --node = skynet.getenv("nodename"),
-    --fd = fd,
-    --gate = source,
-    --agent = agent 的source （register后才有）
-    --key = key --登录时的key，验证登录服的唯一性
---}
+-- users[uid]={
+-- node = skynet.getenv("nodename"),
+-- fd = fd,
+-- gate = source,
+-- agent = agent 的source （register后才有）
+-- key = key --登录时的key，验证登录服的唯一性
+-- }
 
---true/false
+-- true/false
 function dispatch.login(uid, data)
     local user = env.users[uid]
-    --正常登录
+    -- 正常登录
     if not user then
         env.users[uid] = data
         INFO("center ", uid, "login success")
         return true
     end
-    --登录过程中
+    -- 登录过程中
     if not user.agent then
         DEBUG("center %d login fail not user.game", uid)
         return false
     end
-    --踢下线
+    -- 踢下线
     if not dispatch.logout(uid, user.key, "login in other place") then
         DEBUG("center %d login fail not not D.logout", uid)
         return false
     end
-     --gate的 向gate 发kick 原因 需要关闭客户端之前的连接
-     --local ret = cluster.call(user.node, user.gate, "kick", user.fd)
+    -- gate的 向gate 发kick 原因 需要关闭客户端之前的连接
+    -- local ret = cluster.call(user.node, user.gate, "kick", user.fd)
     local ret = skynet.call(user.gate, 'lua', 'kick', user.fd)
     if not ret then
         DEBUG("center logout call gate fail")
         return false
-     end
+    end
 
     user = env.users[uid]
     if user then
@@ -52,7 +52,7 @@ function dispatch.login(uid, data)
     return true
 end
 
---true/false
+-- true/false
 function dispatch.register(uid, data)
     local user = env.users[uid]
     if not user then
@@ -70,14 +70,14 @@ function dispatch.register(uid, data)
         return false
     end
 
-    --DEBUG("center register: %d", uid)
+    -- DEBUG("center register: %d", uid)
     user.agent = data.agent
     user.logined = 1
 
     return true
 end
 
---true/false
+-- true/false
 function dispatch.logout(uid, key, season)
     local user = env.users[uid]
     if not user then
@@ -90,8 +90,8 @@ function dispatch.logout(uid, key, season)
     end
 
     if user.agent then
-        --agent
-        --local ret = cluster.call(user.node, user.agent, "kick", uid, season)
+        -- agent
+        -- local ret = cluster.call(user.node, user.agent, "kick", uid, season)
         local ret = skynet.call(user.agent, 'lua', 'kick', uid, season)
         if not ret then
             DEBUG("center logout call agent fail")
@@ -107,15 +107,14 @@ function dispatch.logout(uid, key, season)
     end
 
     env.users[uid] = nil
-    --DEBUG("++++++++++center logout uid: ", uid, "++++++++++++++")
+    -- DEBUG("++++++++++center logout uid: ", uid, "++++++++++++++")
     return true
 end
 
-
 function module.watch(acm)
-    --统计在线人数
-    local logined = 0		--成功登陆
-    local logining = 0		--登陆流程
+    -- 统计在线人数
+    local logined = 0 -- 成功登陆
+    local logining = 0 -- 登陆流程
     for i, v in pairs(env.users) do
         if v.logined then
             logined = logined + 1
@@ -123,8 +122,11 @@ function module.watch(acm)
             logining = logining + 1
         end
     end
-    local ret = {logined = logined, logining = logining}
-    --总统计
+    local ret = {
+        logined = logined,
+        logining = logining
+    }
+    -- 总统计
     acm.logined = acm.logined and acm.logined + logined or logined
     acm.logining = acm.logining and acm.logining + logining or logining
     return ret, acm
