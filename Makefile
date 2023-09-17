@@ -23,6 +23,7 @@ none :
 	@echo -e "$(COLOR_GREEN) clean:       clean up $(COLOR_RESET)"
 	@echo -e "$(COLOR_GREEN) pack:        pack server $(COLOR_RESET)"
 	@echo -e "$(COLOR_GREEN) publish:     publish server$(COLOR_RESET)"
+
 linux : PLAT = linux
 macosx : PLAT = macosx
 freebsd : PLAT = freebsd
@@ -30,19 +31,24 @@ freebsd : PLAT = freebsd
 clean:
 	cd skynet && $(MAKE) clean
 	cd lualib-src && $(MAKE) clean
+
 all:
 	cd skynet && $(MAKE) $(PLAT)
 	cd lualib-src && $(MAKE) $(PLAT)
 	cd proto && sh export.sh
+
 linux macosx freebsd:
 	$(MAKE) all PLAT=$(PLAT)
 
 update3rd:
 	cd skynet && $(MAKE) update3rd
+
 proto:
 	cd proto && sh export.sh
 	cd storage && sh export.sh
+
 pack:
 	cd release && sh pack.sh
+
 publish:
 

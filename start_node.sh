@@ -6,7 +6,8 @@
 # Description:   use to start server                                          #
 # Modification:  null                                                         #
 ###############################################################################
-#!/bin/sh
+#!/usr/bin/env bash
+
 COLOR_RED='\033[31m'
 COLOR_GREEN='\033[32m'
 COLOR_RESET='\033[0m'
